@@ -1,0 +1,24 @@
+# OS files
+.DS_Store
+Thumbs.db
+
+# Editor folders
+.cursor/
+.vscode/
+
+# Raw/source assets (not used in production)
+logos-raw/
+
+# Duplicate/source PDFs (Ishaan_Tandon_Resume.pdf is the canonical copy)
+CV_Ishaan*.pdf
+document_pdf*.pdf
+
+# Unused logo formats (HTML references .png versions)
+logo-mdi-full.png
+logo-mdi.webp
+logo-mmt.webp
+logo-naukri.webp
+logo-wipro.webp
+
+# Temp files
+*.tmp
