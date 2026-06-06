@@ -1,0 +1,1029 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Optimus Family Hub — Ishaan Tandon</title>
+<meta name="description" content="Product case study: 0→1 neobank Family Hub design — strategy, validation, UX, and metrics.">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='16' fill='%23b8421f'/><text x='50' y='68' font-family='serif' font-size='48' font-weight='600' fill='white' text-anchor='middle'>IT</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #f4f0e8;
+    --bg-warm: #ece6d8;
+    --ink: #1a1a1a;
+    --ink-soft: #4a4a4a;
+    --ink-mute: #8a857d;
+    --rule: #d9d2c4;
+    --accent: #b8421f;
+    --accent-soft: #c75b3a;
+    --accent-mute: rgba(184, 66, 31, 0.08);
+    --paper: #fdfbf6;
+    --blue: #2a6cc9;
+    --green: #2a9c5c;
+    --orange: #e07b30;
+    --purple: #6a4cc9;
+    --teal: #2a8c8c;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--bg);
+    color: var(--ink);
+    font-family: 'Inter', sans-serif;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+  ::selection { background: var(--accent); color: var(--paper); }
+  a { color: inherit; text-decoration: none; }
+
+  .back-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--ink-mute);
+    padding: 24px 40px;
+    transition: color 0.2s;
+  }
+  .back-link:hover { color: var(--accent); }
+
+  /* COVER */
+  .cover {
+    background: var(--ink);
+    color: var(--paper);
+    padding: 80px 40px 64px;
+    position: relative;
+    overflow: hidden;
+  }
+  .cover::before {
+    content: '';
+    position: absolute;
+    top: -80px; right: -80px;
+    width: 400px; height: 400px;
+    border-radius: 50%;
+    background: var(--accent);
+    opacity: 0.15;
+  }
+  .cover-inner {
+    max-width: 900px;
+    margin: 0 auto;
+    position: relative;
+    z-index: 2;
+  }
+  .cover-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+    gap: 16px;
+  }
+  .cover-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--accent-soft);
+  }
+  .cover-wireframe-link {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--accent-soft);
+    border: 1px solid rgba(199, 91, 58, 0.4);
+    padding: 6px 14px;
+    border-radius: 100px;
+    transition: all 0.2s;
+  }
+  .cover-wireframe-link:hover {
+    background: var(--accent);
+    color: var(--paper);
+    border-color: var(--accent);
+  }
+  .cover h1 {
+    font-family: 'Playfair Display', serif;
+    font-weight: 700;
+    font-size: clamp(40px, 6vw, 64px);
+    line-height: 1.05;
+    letter-spacing: -0.03em;
+    margin-bottom: 20px;
+  }
+  .cover h1 em {
+    font-style: italic;
+    font-weight: 500;
+    color: var(--accent-soft);
+  }
+  .cover-quote {
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-size: 18px;
+    line-height: 1.5;
+    color: rgba(253, 251, 246, 0.65);
+    max-width: 640px;
+    margin-bottom: 40px;
+    border-left: 2px solid var(--accent-soft);
+    padding-left: 20px;
+  }
+  .cover-meta {
+    display: flex;
+    gap: 40px;
+    flex-wrap: wrap;
+  }
+  .cover-meta-item {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+  .cover-meta-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: rgba(253, 251, 246, 0.4);
+  }
+  .cover-meta-value {
+    font-size: 14px;
+    color: rgba(253, 251, 246, 0.85);
+  }
+
+  /* MAIN */
+  main {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 56px 40px 80px;
+  }
+
+  .section { margin-bottom: 72px; }
+  .section-header {
+    display: flex;
+    align-items: baseline;
+    gap: 16px;
+    margin-bottom: 32px;
+    padding-bottom: 12px;
+    border-bottom: 2px solid var(--ink);
+  }
+  .section-num {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    color: var(--accent);
+    letter-spacing: 0.1em;
+  }
+  .section-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 28px;
+    font-weight: 600;
+    letter-spacing: -0.02em;
+  }
+
+  .subsection { margin-bottom: 36px; }
+  .subsection-title {
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+    margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .subsection-title::before {
+    content: '';
+    display: inline-block;
+    width: 20px;
+    height: 2px;
+    background: var(--accent);
+  }
+
+  p { margin-bottom: 14px; color: var(--ink-soft); }
+  p strong { color: var(--ink); font-weight: 600; }
+
+  /* METRIC CARDS */
+  .metric-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    gap: 12px;
+    margin-bottom: 28px;
+  }
+  .metric-card {
+    background: var(--paper);
+    border: 1px solid var(--rule);
+    border-radius: 8px;
+    padding: 22px 18px;
+    position: relative;
+    overflow: hidden;
+  }
+  .metric-card::after {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+    background: var(--card-accent, var(--accent));
+  }
+  .metric-val {
+    font-family: 'Playfair Display', serif;
+    font-size: 34px;
+    font-weight: 600;
+    color: var(--ink);
+    line-height: 1;
+    margin-bottom: 6px;
+  }
+  .metric-lbl {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--ink-mute);
+  }
+  .metric-sub {
+    font-size: 12px;
+    color: var(--ink-mute);
+    margin-top: 4px;
+  }
+
+  /* TABLE */
+  .data-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+    margin-bottom: 20px;
+  }
+  .data-table th {
+    background: var(--ink);
+    color: var(--paper);
+    padding: 10px 14px;
+    text-align: left;
+    font-size: 11px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    font-weight: 500;
+  }
+  .data-table td {
+    padding: 10px 14px;
+    border-bottom: 1px solid var(--rule);
+    vertical-align: top;
+  }
+  .data-table tr:hover td { background: var(--bg-warm); }
+  .data-table .mono {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+  }
+
+  /* INSIGHT BOX */
+  .insight-box {
+    background: var(--ink);
+    color: var(--paper);
+    border-radius: 8px;
+    padding: 22px 26px;
+    margin-bottom: 20px;
+  }
+  .insight-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--accent-soft);
+    margin-bottom: 10px;
+  }
+  .insight-box p { color: rgba(253, 251, 246, 0.75); margin-bottom: 0; }
+  .insight-box p + p { margin-top: 8px; }
+  .insight-box strong { color: var(--paper); }
+
+  /* EXPERIMENT CARDS */
+  .exp-card {
+    background: var(--paper);
+    border: 1px solid var(--rule);
+    border-radius: 8px;
+    padding: 24px 26px;
+    margin-bottom: 16px;
+    position: relative;
+    overflow: hidden;
+  }
+  .exp-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+    background: var(--card-accent, var(--accent));
+  }
+  .exp-num {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--ink-mute);
+    margin-bottom: 8px;
+  }
+  .exp-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 20px;
+    font-weight: 500;
+    margin-bottom: 8px;
+    color: var(--ink);
+  }
+  .exp-hypothesis {
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-size: 14px;
+    color: var(--ink-soft);
+    margin-bottom: 16px;
+    border-left: 2px solid var(--accent);
+    padding-left: 14px;
+  }
+  .exp-method-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 6px;
+    font-weight: 500;
+  }
+  .exp-body p {
+    font-size: 13.5px;
+    margin-bottom: 10px;
+  }
+  .exp-success {
+    background: rgba(42, 156, 92, 0.08);
+    border-left: 3px solid var(--green);
+    padding: 12px 16px;
+    border-radius: 0 6px 6px 0;
+    margin-bottom: 12px;
+    font-size: 13px;
+    color: var(--ink-soft);
+  }
+  .exp-success strong { color: var(--green); }
+  .exp-fail {
+    background: rgba(184, 66, 31, 0.06);
+    border-left: 3px solid var(--accent);
+    padding: 12px 16px;
+    border-radius: 0 6px 6px 0;
+    margin-bottom: 0;
+    font-size: 13px;
+    color: var(--ink-soft);
+  }
+  .exp-fail strong { color: var(--accent); }
+
+  /* CAPABILITY BLOCKS */
+  .cap-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin-bottom: 24px;
+  }
+  @media (max-width: 600px) { .cap-grid { grid-template-columns: 1fr; } }
+  .cap-block {
+    background: var(--paper);
+    border: 1px solid var(--rule);
+    border-radius: 8px;
+    padding: 22px 20px;
+  }
+  .cap-block-title {
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-size: 16px;
+    color: var(--accent);
+    margin-bottom: 12px;
+  }
+  .cap-block ul {
+    list-style: none;
+  }
+  .cap-block li {
+    font-size: 13px;
+    color: var(--ink-soft);
+    padding: 5px 0;
+    border-bottom: 1px dashed var(--rule);
+    line-height: 1.45;
+  }
+  .cap-block li:last-child { border-bottom: none; }
+
+  /* FLOW TABLE */
+  .flow-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+    margin-bottom: 20px;
+  }
+  .flow-table th {
+    background: var(--ink);
+    color: var(--paper);
+    padding: 10px 14px;
+    text-align: left;
+    font-size: 11px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    font-weight: 500;
+  }
+  .flow-table td {
+    padding: 10px 14px;
+    border-bottom: 1px solid var(--rule);
+    vertical-align: top;
+  }
+  .flow-table tr:hover td { background: var(--bg-warm); }
+
+  /* HOOK CARDS */
+  .hook-card {
+    background: var(--paper);
+    border: 1px solid var(--rule);
+    border-radius: 8px;
+    padding: 22px 24px;
+    margin-bottom: 14px;
+    position: relative;
+    overflow: hidden;
+  }
+  .hook-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0;
+    width: 3px;
+    height: 100%;
+    background: var(--card-accent, var(--accent));
+  }
+  .hook-num {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    color: var(--accent);
+    margin-bottom: 4px;
+  }
+  .hook-type {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--ink-mute);
+    margin-bottom: 8px;
+  }
+  .hook-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 18px;
+    font-weight: 500;
+    margin-bottom: 10px;
+    color: var(--ink);
+  }
+  .hook-body p {
+    font-size: 13.5px;
+    margin-bottom: 10px;
+  }
+  .hook-copy {
+    background: var(--bg-warm);
+    border-radius: 6px;
+    padding: 12px 16px;
+    font-size: 13px;
+    font-style: italic;
+    color: var(--ink-soft);
+    margin-bottom: 10px;
+    border-left: 2px solid var(--accent);
+  }
+
+  .callout {
+    background: #fff8e8;
+    border: 1px solid #f0d88a;
+    border-radius: 8px;
+    padding: 16px 20px;
+    margin-bottom: 20px;
+    font-size: 13px;
+    color: var(--ink-soft);
+  }
+  .callout strong { color: var(--ink); }
+
+  .design-callout {
+    background: var(--accent-mute);
+    border: 1px solid rgba(184, 66, 31, 0.15);
+    border-radius: 8px;
+    padding: 18px 22px;
+    margin-bottom: 20px;
+    font-size: 13.5px;
+    color: var(--ink-soft);
+    line-height: 1.6;
+  }
+  .design-callout strong { color: var(--ink); }
+
+  hr.divider {
+    border: none;
+    border-top: 1px solid var(--rule);
+    margin: 36px 0;
+  }
+
+  /* FOOTER */
+  .case-footer {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 0 40px 48px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-top: 1px solid var(--rule);
+    padding-top: 24px;
+  }
+  .case-footer span {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    color: var(--ink-mute);
+    letter-spacing: 0.06em;
+  }
+  .case-footer a {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--accent);
+    transition: color 0.2s;
+  }
+  .case-footer a:hover { color: var(--ink); }
+
+  @media (max-width: 600px) {
+    .cover { padding: 48px 24px 40px; }
+    main { padding: 32px 20px 48px; }
+    .back-link { padding: 16px 20px; }
+    .cover h1 { font-size: 36px; }
+    .cover-meta { gap: 20px; }
+    .case-footer { padding: 16px 20px 32px; flex-direction: column; gap: 12px; }
+    .data-table { font-size: 11px; }
+    .data-table th, .data-table td { padding: 8px 8px; }
+  }
+
+  @media print {
+    body { background: white; }
+    .cover { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+    .back-link, .cover-wireframe-link { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<a href="../" class="back-link">&larr; Portfolio</a>
+
+<!-- COVER -->
+<div class="cover">
+  <div class="cover-inner">
+    <div class="cover-top">
+      <div class="cover-label">Optimus &middot; Family Hub</div>
+      <a href="https://www.figma.com/proto/placeholder" target="_blank" rel="noopener" class="cover-wireframe-link">View Wireframes &#x2197;</a>
+    </div>
+    <div class="cover-label" style="margin-bottom:4px">Product Case Study &middot; Neobank &middot; India 2025</div>
+    <h1>Optimus<br><em>Family Hub</em></h1>
+    <div class="cover-quote">A spouse who receives UPI transfers is financially dependent. A spouse with a named Optimus card is a financial participant. That distinction is the product.</div>
+    <div class="cover-meta">
+      <div class="cover-meta-item">
+        <span class="cover-meta-label">Type</span>
+        <span class="cover-meta-value">0&rarr;1 Product Design</span>
+      </div>
+      <div class="cover-meta-item">
+        <span class="cover-meta-label">Domain</span>
+        <span class="cover-meta-value">Neobank &middot; Retail Banking</span>
+      </div>
+      <div class="cover-meta-item">
+        <span class="cover-meta-label">Deliverables</span>
+        <span class="cover-meta-value">Strategy &middot; Validation &middot; UX &middot; Metrics</span>
+      </div>
+      <div class="cover-meta-item">
+        <span class="cover-meta-label">Screens</span>
+        <span class="cover-meta-value">14 screens &middot; 4 flows &middot; annotated</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<main>
+
+<!-- 00 — THE BRIEF -->
+<div class="section">
+  <div class="section-header">
+    <div class="section-num">00</div>
+    <div class="section-title">The brief</div>
+  </div>
+
+  <p>Optimus is a neobank offering checking accounts, savings accounts, and a debit card to retail banking customers. The brief: design a Family Hub that enables the primary account holder to create add-on cards for their spouse, children, parents, or other family members.</p>
+
+  <p>The brief is simple on the surface. The design challenge is not. In India in 2025, the primary competitor for Family Hub is not another neobank. It is the <strong>UPI transfer</strong> &mdash; a behaviour that is free, instant, and already deeply embedded in how households move money. Family Hub has to earn adoption against a default behaviour that already works.</p>
+
+  <div class="insight-box">
+    <div class="insight-label">Strategic Frame</div>
+    <p>Family Hub is a <strong>household retention and acquisition engine</strong>, not a feature. A single-holder account churns when one person switches banks. A household account with two or more active linked cards churns only when an entire household switches simultaneously &mdash; requiring every member to move to a new card, new app, and new habits at the same time. That compounding switching cost is the business case.</p>
+  </div>
+</div>
+
+<!-- 01 — HYPOTHESIS & KPIS -->
+<div class="section">
+  <div class="section-header">
+    <div class="section-num">01</div>
+    <div class="section-title">Hypothesis &amp; KPIs</div>
+  </div>
+
+  <p><strong>Core hypothesis:</strong> Family Hub will increase household-level retention and grow card transaction volume per account by converting single-holder accounts into multi-card household relationships. The switching cost multiplies with every active member added.</p>
+
+  <p>The emotional hypothesis is equally important: a family member who receives UPI transfers is a recipient. A family member with a named Optimus card is a <strong>participant</strong>. Family Hub earns adoption not just because it is useful &mdash; but because it changes how members relate to money in their household.</p>
+
+  <p>The hypothesis holds only if two conditions are both true: primary holders trust a digital neobank enough to link a family member, and linked members use the card for regular spend rather than defaulting to UPI. Validation is designed to test these two conditions before full build.</p>
+
+  <div class="subsection">
+    <div class="subsection-title">KPIs in descending priority</div>
+
+    <table class="data-table">
+      <thead>
+        <tr><th>#</th><th>KPI</th><th>Why this rank</th><th>Target</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="mono">1</td>
+          <td><strong>Household Retention Rate</strong></td>
+          <td>Multi-card households churn at a fraction of single-card households. Primary business case.</td>
+          <td class="mono">+15pp vs single-card</td>
+        </tr>
+        <tr>
+          <td class="mono">2</td>
+          <td><strong>Card Transaction GMV per Account</strong></td>
+          <td>Every active member card multiplies interchange revenue. Revenue thesis lives here.</td>
+          <td class="mono">1.8x baseline GMV</td>
+        </tr>
+        <tr>
+          <td class="mono">3</td>
+          <td><strong>Add-on Card Activation Rate</strong></td>
+          <td>An issued card that is never used delivers neither retention nor revenue.</td>
+          <td class="mono">&gt;60% within 30 days</td>
+        </tr>
+        <tr>
+          <td class="mono">4</td>
+          <td><strong>Member DAU/MAU</strong></td>
+          <td>Active member engagement signals the card is genuinely used, not just held.</td>
+          <td class="mono">&gt;0.25</td>
+        </tr>
+        <tr>
+          <td class="mono">5</td>
+          <td><strong>Primary Holder NPS</strong></td>
+          <td>Control and visibility features drive primary holder satisfaction and word-of-mouth.</td>
+          <td class="mono">+8 points</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="callout">
+      <strong>Revenue note:</strong> Interchange on debit card POS transactions is the primary revenue mechanism. UPI transactions carry zero interchange for the issuing bank. All financial projections are based on card transaction volume only. The single most important assumption to validate: what fraction of member spend will be card POS vs UPI.
+    </div>
+    <div class="callout">
+      <strong>Pricing decision:</strong> Family Hub is free. No annual card fee, no issuance charge. Traditional banks charge Rs. 200&ndash;500 per year. Optimus charges zero. A fee at the invite step creates the exact friction that prevents the trust test from being passed. Revenue is interchange, not card fees.
+    </div>
+  </div>
+</div>
+
+<!-- 02 — RIFE ANALYSIS -->
+<div class="section">
+  <div class="section-header">
+    <div class="section-num">02</div>
+    <div class="section-title">RIFE Analysis</div>
+  </div>
+
+  <div class="metric-grid">
+    <div class="metric-card" style="--card-accent:var(--accent)">
+      <div class="metric-val">12&ndash;18%</div>
+      <div class="metric-lbl">Reach</div>
+      <div class="metric-sub">of 500K active users</div>
+    </div>
+    <div class="metric-card" style="--card-accent:var(--orange)">
+      <div class="metric-val">Low</div>
+      <div class="metric-lbl">Frequency</div>
+      <div class="metric-sub">Setup once, monitor weekly</div>
+    </div>
+    <div class="metric-card" style="--card-accent:var(--green)">
+      <div class="metric-val">High</div>
+      <div class="metric-lbl">Impact</div>
+      <div class="metric-sub">Financial identity shift</div>
+    </div>
+    <div class="metric-card" style="--card-accent:var(--blue)">
+      <div class="metric-val">High</div>
+      <div class="metric-lbl">Effort</div>
+      <div class="metric-sub">KYC + card infra required</div>
+    </div>
+  </div>
+
+  <table class="data-table">
+    <thead>
+      <tr><th>Dimension</th><th>Estimate</th><th>Basis</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>Reach</strong></td>
+        <td class="mono">60,000&ndash;90,000 users</td>
+        <td>12&ndash;18% of 500K active users &mdash; married or with dependents, willing to link family to a neobank. Validated via Experiment 1 trust interviews.</td>
+      </tr>
+      <tr>
+        <td><strong>Frequency</strong></td>
+        <td class="mono">Setup: once<br>Monitoring: 3&ndash;4x/week</td>
+        <td>Primary holder sets up once. Ongoing engagement comes from transaction notifications and spend review &mdash; a high-value, low-friction touchpoint.</td>
+      </tr>
+      <tr>
+        <td><strong>Impact</strong></td>
+        <td class="mono">High (emotional + financial)</td>
+        <td>Changes the household&rsquo;s relationship to money, not just adds a card. Products that change how people feel about themselves have higher retention than products that only change what they can do.</td>
+      </tr>
+      <tr>
+        <td><strong>Effort</strong></td>
+        <td class="mono">High &mdash; 3 phases</td>
+        <td>Phase 1 (MVP): sub-account card issuance, member KYC, dual notifications. Phase 2: multi-member, spend analytics. Phase 3: member-to-primary conversion loop. Gated on phase-by-phase metric performance.</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- 03 — VALIDATION EXPERIMENTS -->
+<div class="section">
+  <div class="section-header">
+    <div class="section-num">03</div>
+    <div class="section-title">Validation Experiments</div>
+  </div>
+
+  <p>Three experiments. Each tests an assumption that would kill Family Hub if wrong. No experiment is run if the one before it fails &mdash; the sequence is a gate, not a parallel track.</p>
+
+  <div class="exp-card" style="--card-accent:var(--accent)">
+    <div class="exp-num">Experiment 01 &mdash; Run first</div>
+    <div class="exp-title">Primary Holder Trust Interviews</div>
+    <div class="exp-hypothesis">&ldquo;Primary account holders will link a family member to their Optimus account if given spend controls and real-time visibility.&rdquo;</div>
+    <div class="exp-body">
+      <div class="exp-method-label">Method</div>
+      <p>15 primary Optimus account holders, married or with dependents. 45-min semi-structured interview on current family finance behaviour, trust concerns, and concept walkthrough of spend limits and freeze controls.</p>
+      <div class="exp-success"><strong>Success:</strong> 10 of 15 say they would link a family member given the controls shown. Trust concern is addressable by product design.</div>
+      <div class="exp-fail"><strong>If it fails:</strong> Fewer than 10 of 15 &rarr; trust barrier is structural. Do not proceed to MVP. Reframe as a waitlist product and run a 3-month trust-building campaign before re-testing. If refusal is neobank-specific distrust rather than product design &rarr; Family Hub is premature for Optimus&rsquo;s current stage. Escalate before committing engineering.</div>
+    </div>
+  </div>
+
+  <div class="exp-card" style="--card-accent:var(--orange)">
+    <div class="exp-num">Experiment 02 &mdash; No infrastructure required</div>
+    <div class="exp-title">Card vs UPI Spend Proxy Analysis</div>
+    <div class="exp-hypothesis">&ldquo;Existing transaction data contains a reliable proxy signal for whether Family Hub members will use a card rather than defaulting to UPI.&rdquo;</div>
+    <div class="exp-body">
+      <div class="exp-method-label">Method</div>
+      <p>Pull 90 days of transaction data for all active primary account holders. Segment into card POS, UPI outbound, and other. Calculate card POS % per user. Identify the Hook 1 cohort (repeat bank transfer senders) and measure their card POS % vs platform average.</p>
+      <div class="exp-success"><strong>Success:</strong> 35%+ of active users spend 40%+ on card POS. Card usage increases with account tenure.</div>
+      <div class="exp-fail"><strong>If it fails:</strong> Fewer than 25% card-first &rarr; Optimus&rsquo;s user base is predominantly UPI-native. GMV thesis is structurally weak. Either redesign Family Hub to include UPI visibility, or accept that interchange revenue will be materially lower than 1.8x target. Card POS not increasing with tenure &rarr; habit formation is not occurring. Investigate card experience friction before adding a second card layer.</div>
+    </div>
+  </div>
+
+  <div class="exp-card" style="--card-accent:var(--green)">
+    <div class="exp-num">Experiment 03 &mdash; Run after Exp 01 passes</div>
+    <div class="exp-title">Add Member Flow Prototype Usability Test</div>
+    <div class="exp-hypothesis">&ldquo;A primary holder can complete the invite and spend limit setup flow in under 5 minutes without assistance.&rdquo;</div>
+    <div class="exp-body">
+      <div class="exp-method-label">Method</div>
+      <p>Medium-fidelity prototype of the complete add member flow. Moderated usability test with 12 participants. Task: create a card for your spouse with a Rs. 15,000 monthly limit. Measure time on task, completion rate, drop-off screen.</p>
+      <div class="exp-success"><strong>Success:</strong> 9 of 12 complete the flow. Average time under 5 minutes. No single screen generates confusion in 25%+ of participants.</div>
+      <div class="exp-fail"><strong>If it fails:</strong> Below 70% completion &rarr; identify highest drop-off screen and redesign before engineering begins. Spend limit configuration is primary drop-off &rarr; replace free-text input with slider (Rs. 5K / 15K / 25K / 50K presets).</div>
+    </div>
+  </div>
+</div>
+
+<!-- 04 — CAPABILITIES -->
+<div class="section">
+  <div class="section-header">
+    <div class="section-num">04</div>
+    <div class="section-title">Capabilities (MVP)</div>
+  </div>
+
+  <p>MVP only. The three capabilities without which Family Hub fails: sub-account card issuance with real-time limit enforcement, member KYC and onboarding, and dual real-time transaction notifications. Phase 2 and Phase 3 are gated on MVP performance metrics being met.</p>
+
+  <div class="cap-grid">
+    <div class="cap-block">
+      <div class="cap-block-title">Primary Holder &mdash; Member Management</div>
+      <ul>
+        <li>Invite a family member by mobile number</li>
+        <li>Set a monthly spend limit per member</li>
+        <li>Freeze or unfreeze a member card instantly</li>
+        <li>View member transaction history in real time</li>
+        <li>Remove a member and deactivate their card</li>
+      </ul>
+    </div>
+    <div class="cap-block">
+      <div class="cap-block-title">Primary Holder &mdash; Visibility</div>
+      <ul>
+        <li>Real-time push on every member card transaction</li>
+        <li>Family Hub dashboard with all active members</li>
+        <li>Monthly spend summary per member</li>
+        <li>Remaining limit visible at a glance</li>
+      </ul>
+    </div>
+    <div class="cap-block">
+      <div class="cap-block-title">Member &mdash; Own Card Experience</div>
+      <ul>
+        <li>Download Optimus app with own login</li>
+        <li>Set own PIN (primary holder cannot see it)</li>
+        <li>View own transaction history and balance</li>
+        <li>Manage card settings independently</li>
+        <li>Own spending notifications</li>
+      </ul>
+    </div>
+    <div class="cap-block">
+      <div class="cap-block-title">Platform &mdash; MVP Only</div>
+      <ul>
+        <li>Member KYC via Aadhaar + PAN (digital)</li>
+        <li>Sub-account card issuance with limit enforcement</li>
+        <li>Real-time spend limit tracking</li>
+        <li>Dual notification architecture (primary + member)</li>
+        <li>Privacy boundary: member cannot see primary balance</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="design-callout">
+    <strong>Design Principle:</strong> The member app is not a lite version of the primary holder&rsquo;s app. It is a product designed around a specific emotional truth: <em>this is your card, your history, your financial identity.</em> A member who feels ownership over their card and their data is a member who uses it. The privacy boundary &mdash; members cannot see the primary account balance &mdash; is not a restriction. It is the design decision that makes the member experience feel like independence rather than supervision.
+  </div>
+</div>
+
+<!-- 05 — UX FLOWS -->
+<div class="section">
+  <div class="section-header">
+    <div class="section-num">05</div>
+    <div class="section-title">UX Flows</div>
+  </div>
+
+  <table class="flow-table">
+    <thead>
+      <tr><th>Flow</th><th>Actor</th><th>Screens</th><th>Key Design Decision</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>Flow 1</strong><br>Adding a Member</td>
+        <td>Primary Holder</td>
+        <td class="mono">4</td>
+        <td>Spend limit configuration as slider with presets &mdash; reduces drop-off at the highest-friction step.</td>
+      </tr>
+      <tr>
+        <td><strong>Flow 2</strong><br>Managing Members</td>
+        <td>Primary Holder</td>
+        <td class="mono">3</td>
+        <td>Dashboard shows steady-state Phase 2 view (3 members). MVP renders one member. Design shows scale.</td>
+      </tr>
+      <tr>
+        <td><strong>Flow 3</strong><br>Member Onboarding</td>
+        <td>Member</td>
+        <td class="mono">4</td>
+        <td>Member sets own PIN with explicit note that primary holder cannot see it. Ownership framing from first screen.</td>
+      </tr>
+      <tr>
+        <td><strong>Flow 4</strong><br>Card Usage &amp; Management</td>
+        <td>Member</td>
+        <td class="mono">3</td>
+        <td>Remaining limit is the hero number on member home screen &mdash; not relative to primary account. Independent financial identity.</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="design-callout">
+    The single design principle running through all four flows: <strong>the member experience must feel like ownership, not access.</strong> The member&rsquo;s name is on the card. The member sets their own PIN. The member&rsquo;s remaining balance is the hero number on their home screen. These are not UX details. They are the product&rsquo;s emotional thesis expressed in interface decisions.
+  </div>
+</div>
+
+<!-- 06 — DISCOVERY HOOKS -->
+<div class="section">
+  <div class="section-header">
+    <div class="section-num">06</div>
+    <div class="section-title">Discovery Hooks</div>
+  </div>
+
+  <p>Three hooks at launch. One behavioural trigger, one surface placement, one notification trigger. Additional hooks are activated only after in-app adoption rate is measured from the first three &mdash; more hooks firing simultaneously produces measurement noise and user fatigue, not more adoption.</p>
+
+  <div class="hook-card" style="--card-accent:var(--accent)">
+    <div class="hook-num">01</div>
+    <div class="hook-type">Behavioural Trigger &mdash; Highest Intent</div>
+    <div class="hook-title">Repeat Bank Transfer to Same Recipient</div>
+    <div class="hook-body">
+      <p><strong>Trigger:</strong> Primary holder sends 3+ bank transfers to the same beneficiary in a calendar month, combined value exceeding Rs. 3,000. Fires on the transfer confirmation screen immediately after the third qualifying transfer.</p>
+      <div class="hook-copy">&ldquo;You have sent Rs. X to [Name] this month. Give them a card of their own instead &mdash; free, with a limit you control.&rdquo;</div>
+      <p><strong>Why this is highest-intent:</strong> the user is already doing the exact behaviour Family Hub replaces. Note: fires on bank transfers only, not UPI &mdash; UPI is a problem Family Hub doesn&rsquo;t solve.</p>
+    </div>
+  </div>
+
+  <div class="hook-card" style="--card-accent:var(--blue)">
+    <div class="hook-num">02</div>
+    <div class="hook-type">Surface &mdash; Always Present</div>
+    <div class="hook-title">Family Tab in Bottom Navigation</div>
+    <div class="hook-body">
+      <p>Always present, no condition required. Pre-setup: feature introduction. Post-setup: Family Hub dashboard directly.</p>
+      <div class="hook-copy">&ldquo;Stop sending transfers. Give them a card of their own.&rdquo;</div>
+      <p>Lead with the behaviour being replaced (transfers) and the emotional upgrade (their own card). Free is stated explicitly &mdash; removes the fee friction that kills add-on card adoption at traditional banks.</p>
+    </div>
+  </div>
+
+  <div class="hook-card" style="--card-accent:var(--green)">
+    <div class="hook-num">03</div>
+    <div class="hook-type">Notification &mdash; Post-Salary Credit</div>
+    <div class="hook-title">Salary Credit Nudge</div>
+    <div class="hook-body">
+      <p><strong>Trigger:</strong> Primary holder receives a salary credit above Rs. 25,000. Sent once only, on the first qualifying salary credit after launch. Suppressed if Family Hub is already set up.</p>
+      <div class="hook-copy"><strong>Push title:</strong> &ldquo;Your salary is in.&rdquo;<br><strong>Body:</strong> &ldquo;Manage household expenses smarter this month. Set up Family Hub to give your family their own cards with spending controls.&rdquo;</div>
+      <p><strong>Why post-salary:</strong> highest financial management intent moment in the month. Users are actively thinking about budgets at exactly this moment.</p>
+    </div>
+  </div>
+
+  <div class="callout">
+    <strong>Guardrails:</strong> User who has set up Family Hub never sees any discovery hook again. User who dismisses the same hook twice is suppressed for 90 days. No user receives more than 2 discovery push notifications in any 30-day window.
+  </div>
+</div>
+
+<!-- 07 — METRICS & NORTH STAR -->
+<div class="section">
+  <div class="section-header">
+    <div class="section-num">07</div>
+    <div class="section-title">Metrics &amp; North Star</div>
+  </div>
+
+  <div class="subsection">
+    <div class="subsection-title">North Star &mdash; Two Definitions</div>
+    <p><strong>MVP North Star:</strong> Number of Active Family Hub Accounts &mdash; a primary account with at least one active add-on card, where active = at least one card POS transaction in the last 30 days on both cards. Requiring two cards for the MVP north star would make it unreachable until Phase 2 ships.</p>
+    <p><strong>Steady-State North Star (Phase 2+):</strong> Number of Active Household Accounts &mdash; at least two active add-on cards. At two active members, the switching cost becomes genuinely compounding. Neither north star can be inflated by card issuance without use. A card issued to a member who defaults to UPI counts zero.</p>
+  </div>
+
+  <div class="subsection">
+    <div class="subsection-title">Adoption Funnel</div>
+    <table class="data-table">
+      <thead>
+        <tr><th>Stage</th><th>Metric</th><th>Target</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Hook impression</td><td>Hook CTR</td><td class="mono">&gt;8%</td></tr>
+        <tr><td>Flow start &rarr; KYC initiated</td><td>Step 1 completion</td><td class="mono">&gt;70%</td></tr>
+        <tr><td>KYC initiated &rarr; KYC approved</td><td>KYC completion rate</td><td class="mono">&gt;80%</td></tr>
+        <tr><td>KYC approved &rarr; card activated</td><td>Activation rate (30 days)</td><td class="mono">&gt;60%</td></tr>
+        <tr><td>Card activated &rarr; first POS transaction</td><td>First transaction (7 days)</td><td class="mono">&gt;50%</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="subsection">
+    <div class="subsection-title">Leading Indicators &mdash; Weekly, First 12 Weeks</div>
+    <table class="data-table">
+      <thead>
+        <tr><th>Metric</th><th>Healthy Range</th><th>Diagnostic if Missed</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Member card POS % of total spend</strong></td>
+          <td class="mono">&gt;35%</td>
+          <td>UPI-native members. Review card experience friction, not product.</td>
+        </tr>
+        <tr>
+          <td><strong>Primary holder weekly notification open rate</strong></td>
+          <td class="mono">&gt;40%</td>
+          <td>Notification fatigue. Reduce frequency or add spend summary digest.</td>
+        </tr>
+        <tr>
+          <td><strong>Member DAU/MAU</strong></td>
+          <td class="mono">&gt;0.25</td>
+          <td>Card not being used as primary. Investigate UPI vs card split for members.</td>
+        </tr>
+        <tr>
+          <td><strong>Spend limit modification rate</strong></td>
+          <td class="mono">&lt;15%/week</td>
+          <td>Limits set too low initially. Add suggested limits based on member spend patterns.</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="subsection">
+    <div class="subsection-title">Guardrail Metrics (Never cross these)</div>
+    <table class="data-table">
+      <thead>
+        <tr><th>Metric</th><th>Guardrail</th><th>Action if Crossed</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Member card fraud rate</strong></td>
+          <td class="mono">&lt;0.05%</td>
+          <td>Pause new issuance. Review KYC and fraud model.</td>
+        </tr>
+        <tr>
+          <td><strong>Primary holder churn post-setup</strong></td>
+          <td>Not higher than control</td>
+          <td>Family Hub is increasing complexity, not reducing it. Simplify controls.</td>
+        </tr>
+        <tr>
+          <td><strong>Member KYC failure rate</strong></td>
+          <td class="mono">&lt;20%</td>
+          <td>KYC friction killing activation. Review document requirements.</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="design-callout">
+    <strong>Closing principle:</strong> A metric that cannot be acted on is not a metric. Every metric above has a defined healthy range and a defined first diagnostic step when it misses. The card vs UPI spend ratio for members is reviewed every single week without exception in the first 12 weeks &mdash; it is the one number that determines whether the revenue thesis holds.
+  </div>
+</div>
+
+</main>
+
+<div class="case-footer">
+  <span>Ishaan Tandon &middot; Optimus Family Hub</span>
+  <a href="../">&larr; Back to portfolio</a>
+</div>
+
+</body>
+</html>
