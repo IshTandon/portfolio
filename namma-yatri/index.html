@@ -1,0 +1,913 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Namma Yatri Datathon 2026 — Ishaan Tandon</title>
+<meta name="description" content="End-to-end funnel and cancellation analysis on 6,273 ride searches. Namma Yatri Datathon 2026.">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='16' fill='%23b8421f'/><text x='50' y='68' font-family='serif' font-size='48' font-weight='600' fill='white' text-anchor='middle'>IT</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #f4f0e8;
+    --bg-warm: #ece6d8;
+    --ink: #1a1a1a;
+    --ink-soft: #4a4a4a;
+    --ink-mute: #8a857d;
+    --rule: #d9d2c4;
+    --accent: #b8421f;
+    --accent-soft: #c75b3a;
+    --accent-mute: rgba(184, 66, 31, 0.08);
+    --paper: #fdfbf6;
+    --blue: #2a6cc9;
+    --green: #2a9c5c;
+    --orange: #e07b30;
+    --purple: #6a4cc9;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--bg);
+    color: var(--ink);
+    font-family: 'Inter', sans-serif;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+  ::selection { background: var(--accent); color: var(--paper); }
+  a { color: inherit; text-decoration: none; }
+
+  /* BACK LINK */
+  .back-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--ink-mute);
+    padding: 24px 40px;
+    transition: color 0.2s;
+  }
+  .back-link:hover { color: var(--accent); }
+
+  /* COVER */
+  .cover {
+    background: var(--ink);
+    color: var(--paper);
+    padding: 80px 40px 64px;
+    position: relative;
+    overflow: hidden;
+  }
+  .cover::before {
+    content: '';
+    position: absolute;
+    top: -80px; right: -80px;
+    width: 400px; height: 400px;
+    border-radius: 50%;
+    background: var(--accent);
+    opacity: 0.15;
+  }
+  .cover-inner {
+    max-width: 900px;
+    margin: 0 auto;
+    position: relative;
+    z-index: 2;
+  }
+  .cover-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--accent-soft);
+    margin-bottom: 20px;
+  }
+  .cover h1 {
+    font-family: 'Playfair Display', serif;
+    font-weight: 700;
+    font-size: clamp(40px, 6vw, 64px);
+    line-height: 1.05;
+    letter-spacing: -0.03em;
+    margin-bottom: 20px;
+  }
+  .cover h1 em {
+    font-style: italic;
+    font-weight: 500;
+    color: var(--accent-soft);
+  }
+  .cover-desc {
+    font-size: 17px;
+    line-height: 1.6;
+    color: rgba(253, 251, 246, 0.7);
+    max-width: 640px;
+    margin-bottom: 40px;
+  }
+  .cover-meta {
+    display: flex;
+    gap: 40px;
+    flex-wrap: wrap;
+  }
+  .cover-meta-item {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+  .cover-meta-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: rgba(253, 251, 246, 0.4);
+  }
+  .cover-meta-value {
+    font-size: 14px;
+    color: rgba(253, 251, 246, 0.85);
+  }
+
+  /* MAIN */
+  main {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 56px 40px 80px;
+  }
+
+  /* SECTION */
+  .section { margin-bottom: 72px; }
+  .section-header {
+    display: flex;
+    align-items: baseline;
+    gap: 16px;
+    margin-bottom: 32px;
+    padding-bottom: 12px;
+    border-bottom: 2px solid var(--ink);
+  }
+  .section-num {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    color: var(--accent);
+    letter-spacing: 0.1em;
+  }
+  .section-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 28px;
+    font-weight: 600;
+    letter-spacing: -0.02em;
+  }
+
+  .subsection { margin-bottom: 36px; }
+  .subsection-title {
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+    margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .subsection-title::before {
+    content: '';
+    display: inline-block;
+    width: 20px;
+    height: 2px;
+    background: var(--accent);
+  }
+
+  p { margin-bottom: 14px; color: var(--ink-soft); }
+  p strong { color: var(--ink); font-weight: 600; }
+
+  /* METRIC CARDS */
+  .metric-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    gap: 12px;
+    margin-bottom: 28px;
+  }
+  .metric-card {
+    background: var(--paper);
+    border: 1px solid var(--rule);
+    border-radius: 8px;
+    padding: 22px 18px;
+    position: relative;
+    overflow: hidden;
+  }
+  .metric-card::after {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+    background: var(--card-accent, var(--accent));
+  }
+  .metric-val {
+    font-family: 'Playfair Display', serif;
+    font-size: 34px;
+    font-weight: 600;
+    color: var(--ink);
+    line-height: 1;
+    margin-bottom: 6px;
+  }
+  .metric-lbl {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--ink-mute);
+  }
+  .metric-sub {
+    font-size: 12px;
+    color: var(--ink-mute);
+    margin-top: 4px;
+  }
+
+  /* FUNNEL */
+  .funnel-wrap { margin-bottom: 8px; }
+  .funnel-label {
+    display: flex;
+    justify-content: space-between;
+    font-size: 12px;
+    margin-bottom: 4px;
+  }
+  .funnel-label .stage { font-weight: 500; color: var(--ink); }
+  .funnel-label .pct { font-family: 'JetBrains Mono', monospace; color: var(--ink-mute); font-size: 11px; }
+  .funnel-track {
+    background: var(--rule);
+    border-radius: 4px;
+    height: 30px;
+    position: relative;
+    overflow: hidden;
+  }
+  .funnel-fill {
+    height: 100%;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    padding-left: 12px;
+    font-size: 11px;
+    font-weight: 600;
+    color: white;
+  }
+  .funnel-arrow {
+    text-align: center;
+    font-size: 11px;
+    color: var(--ink-mute);
+    margin: 4px 0 8px;
+    font-family: 'JetBrains Mono', monospace;
+  }
+
+  /* TABLE */
+  .data-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+    margin-bottom: 20px;
+  }
+  .data-table th {
+    background: var(--ink);
+    color: var(--paper);
+    padding: 10px 14px;
+    text-align: left;
+    font-size: 11px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    font-weight: 500;
+  }
+  .data-table td {
+    padding: 10px 14px;
+    border-bottom: 1px solid var(--rule);
+    vertical-align: middle;
+  }
+  .data-table tr:hover td { background: var(--bg-warm); }
+  .data-table .mono {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+  }
+  .drop-badge {
+    display: inline-block;
+    font-size: 10px;
+    font-weight: 600;
+    padding: 2px 8px;
+    border-radius: 20px;
+    letter-spacing: 0.04em;
+  }
+  .drop-search { background: rgba(184, 66, 31, 0.1); color: var(--accent); }
+  .drop-booking { background: rgba(42, 108, 201, 0.1); color: var(--blue); }
+
+  /* INSIGHT BOX */
+  .insight-box {
+    background: var(--ink);
+    color: var(--paper);
+    border-radius: 8px;
+    padding: 22px 26px;
+    margin-bottom: 20px;
+  }
+  .insight-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--accent-soft);
+    margin-bottom: 10px;
+  }
+  .insight-box p { color: rgba(253, 251, 246, 0.75); margin-bottom: 0; }
+  .insight-box strong { color: var(--paper); }
+
+  /* HYPOTHESIS CARDS */
+  .hypo-card {
+    background: var(--paper);
+    border: 1px solid var(--rule);
+    border-left: 4px solid var(--card-accent, var(--accent));
+    border-radius: 0 8px 8px 0;
+    padding: 18px 22px;
+    margin-bottom: 14px;
+  }
+  .hypo-title {
+    font-weight: 600;
+    font-size: 14px;
+    margin-bottom: 8px;
+    color: var(--ink);
+  }
+  .hypo-evidence {
+    font-size: 13px;
+    color: var(--ink-soft);
+    line-height: 1.6;
+  }
+  .hypo-evidence strong { color: var(--ink); }
+
+  /* REASON BARS */
+  .reason-bar {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 8px;
+  }
+  .reason-bar .name {
+    font-size: 12px;
+    color: var(--ink);
+    width: 200px;
+    flex-shrink: 0;
+    font-family: 'JetBrains Mono', monospace;
+  }
+  .reason-bar .bar {
+    flex: 1;
+    background: var(--rule);
+    border-radius: 3px;
+    height: 22px;
+    position: relative;
+    overflow: hidden;
+  }
+  .reason-bar .fill {
+    height: 100%;
+    border-radius: 3px;
+    background: var(--accent);
+    opacity: 0.8;
+  }
+  .reason-bar .count {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    color: var(--ink-mute);
+    width: 40px;
+    text-align: right;
+  }
+
+  /* RECOMMENDATION CARDS */
+  .rec-card {
+    background: var(--paper);
+    border: 1px solid var(--rule);
+    border-radius: 8px;
+    padding: 20px 22px;
+    margin-bottom: 12px;
+    display: flex;
+    gap: 18px;
+    align-items: flex-start;
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+  .rec-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(0,0,0,0.06);
+  }
+  .rec-num {
+    font-family: 'Playfair Display', serif;
+    font-size: 36px;
+    color: var(--rule);
+    line-height: 1;
+    flex-shrink: 0;
+  }
+  .rec-title {
+    font-weight: 600;
+    font-size: 14px;
+    margin-bottom: 6px;
+    color: var(--ink);
+  }
+  .rec-desc {
+    font-size: 13px;
+    color: var(--ink-soft);
+    line-height: 1.55;
+  }
+
+  .callout {
+    background: #fff8e8;
+    border: 1px solid #f0d88a;
+    border-radius: 8px;
+    padding: 16px 20px;
+    margin-bottom: 20px;
+    font-size: 13px;
+    color: var(--ink-soft);
+  }
+  .callout strong { color: var(--ink); }
+
+  hr.divider {
+    border: none;
+    border-top: 1px solid var(--rule);
+    margin: 36px 0;
+  }
+
+  /* FOOTER */
+  .case-footer {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 0 40px 48px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-top: 1px solid var(--rule);
+    padding-top: 24px;
+  }
+  .case-footer span {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    color: var(--ink-mute);
+    letter-spacing: 0.06em;
+  }
+  .case-footer a {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--accent);
+    transition: color 0.2s;
+  }
+  .case-footer a:hover { color: var(--ink); }
+
+  .highlight-row { background: rgba(184, 66, 31, 0.04); }
+  .text-accent { color: var(--accent); font-weight: 600; }
+  .text-green { color: var(--green); font-weight: 600; }
+
+  @media (max-width: 600px) {
+    .cover { padding: 48px 24px 40px; }
+    main { padding: 32px 20px 48px; }
+    .back-link { padding: 16px 20px; }
+    .cover h1 { font-size: 36px; }
+    .cover-meta { gap: 20px; }
+    .reason-bar .name { width: 140px; font-size: 10px; }
+    .case-footer { padding: 16px 20px 32px; flex-direction: column; gap: 12px; }
+    .data-table { font-size: 11px; }
+    .data-table th, .data-table td { padding: 8px 8px; }
+  }
+
+  @media print {
+    body { background: white; }
+    .cover { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+    .back-link { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<a href="../" class="back-link">&larr; Portfolio</a>
+
+<!-- COVER -->
+<div class="cover">
+  <div class="cover-inner">
+    <div class="cover-label">Namma Yatri &middot; Datathon 2026</div>
+    <h1>Namma Yatri<br><em>Datathon 2026</em></h1>
+    <p class="cover-desc">End-to-end funnel and cancellation analysis on 6,273 ride searches. Diagnosing where demand leaks, why drivers cancel, and what to fix first.</p>
+    <div class="cover-meta">
+      <div class="cover-meta-item">
+        <span class="cover-meta-label">Context</span>
+        <span class="cover-meta-value">Timed Datathon &middot; 2.5 hrs</span>
+      </div>
+      <div class="cover-meta-item">
+        <span class="cover-meta-label">Dataset</span>
+        <span class="cover-meta-value">Search &middot; Quote &middot; Booking &middot; Cancellation</span>
+      </div>
+      <div class="cover-meta-item">
+        <span class="cover-meta-label">Tools</span>
+        <span class="cover-meta-value">Excel &middot; Python (Pandas)</span>
+      </div>
+      <div class="cover-meta-item">
+        <span class="cover-meta-label">Focus</span>
+        <span class="cover-meta-value">Funnel Analysis &middot; Cancellation RCA</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<main>
+
+<!-- 00 — THE PROBLEM -->
+<div class="section">
+  <div class="section-header">
+    <div class="section-num">00</div>
+    <div class="section-title">The problem</div>
+  </div>
+
+  <p>Namma Yatri is an open-network ride-hailing platform operating across Bengaluru and other Indian cities on the ONDC stack. Unlike Ola or Uber, it runs on a zero-commission model where drivers keep 100% of the fare.</p>
+
+  <p>The Datathon provided four raw CSVs spanning the full rider journey: search requests, driver quotes, bookings, and cancellations. The task was to identify where the platform loses riders, understand driver cancellation behaviour, and surface actionable recommendations. Two questions had to be answered in 2.5 hours.</p>
+
+  <div class="insight-box">
+    <div class="insight-label">The two questions</div>
+    <p><strong>Q1:</strong> Analyse the conversion funnel from search to completed trip. Segment by time of day and trip length. Identify the biggest drop-off points and hypothesise why.</p>
+    <p style="margin-top:8px"><strong>Q2:</strong> Analyse booking cancellations. Who cancels, why, and what patterns emerge across driver ratings, pickup distance, and time of day?</p>
+  </div>
+</div>
+
+<!-- 01 — UNDERSTANDING THE DATA -->
+<div class="section">
+  <div class="section-header">
+    <div class="section-num">01</div>
+    <div class="section-title">Understanding the data</div>
+  </div>
+
+  <p>Before any analysis, I mapped how the four tables connect. Each table represents one stage of the rider journey and links to the next via a shared key.</p>
+
+  <table class="data-table">
+    <thead>
+      <tr><th>Table</th><th>Rows</th><th>Key Column</th><th>What It Represents</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>search_data</strong></td>
+        <td class="mono">6,273</td>
+        <td class="mono">search_request_id</td>
+        <td>Every ride search a rider made. Distance in metres (UTC timestamp).</td>
+      </tr>
+      <tr>
+        <td><strong>quote_data</strong></td>
+        <td class="mono">9,621</td>
+        <td class="mono">search_request_id</td>
+        <td>Driver quotes. Multiple drivers can quote one search.</td>
+      </tr>
+      <tr>
+        <td><strong>booking_data</strong></td>
+        <td class="mono">2,776</td>
+        <td class="mono">quote_id</td>
+        <td>One booking per accepted quote. Status: COMPLETED / CANCELLED / TRIP_ASSIGNED.</td>
+      </tr>
+      <tr>
+        <td><strong>booking_cancellation_data</strong></td>
+        <td class="mono">1,263</td>
+        <td class="mono">booking_id</td>
+        <td>Cancellations. Source: ByDriver / ByUser / ByApplication.</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="callout">
+    <strong>Key data decisions:</strong> Timestamps were in UTC &mdash; I extracted the hour and added 5 to approximate IST. Distances were in metres and converted to km. Trip length buckets: Short (&lt;5km), Medium (5&ndash;15km), Long (&gt;15km). Time of day buckets: Morning (6&ndash;10AM), Day (10AM&ndash;5PM), Evening (5&ndash;9PM), Night (9PM&ndash;6AM).
+  </div>
+</div>
+
+<!-- 02 — THE OVERALL FUNNEL -->
+<div class="section">
+  <div class="section-header">
+    <div class="section-num">02</div>
+    <div class="section-title">The overall funnel</div>
+  </div>
+
+  <div class="metric-grid">
+    <div class="metric-card" style="--card-accent:var(--accent)">
+      <div class="metric-val">6,273</div>
+      <div class="metric-lbl">Total Searches</div>
+    </div>
+    <div class="metric-card" style="--card-accent:var(--orange)">
+      <div class="metric-val">52.8%</div>
+      <div class="metric-lbl">Search &rarr; Quote</div>
+      <div class="metric-sub">3,315 searches quoted</div>
+    </div>
+    <div class="metric-card" style="--card-accent:var(--blue)">
+      <div class="metric-val">83.7%</div>
+      <div class="metric-lbl">Quote &rarr; Booking</div>
+      <div class="metric-sub">2,776 bookings made</div>
+    </div>
+    <div class="metric-card" style="--card-accent:var(--green)">
+      <div class="metric-val">55.2%</div>
+      <div class="metric-lbl">Booking &rarr; Complete</div>
+      <div class="metric-sub">1,532 trips done</div>
+    </div>
+    <div class="metric-card" style="--card-accent:var(--purple)">
+      <div class="metric-val">24.4%</div>
+      <div class="metric-lbl">End-to-End</div>
+      <div class="metric-sub">Search &rarr; Completion</div>
+    </div>
+  </div>
+
+  <div class="funnel-wrap">
+    <div class="funnel-label"><span class="stage">Search</span><span class="pct">6,273 &mdash; 100%</span></div>
+    <div class="funnel-track"><div class="funnel-fill" style="width:100%;background:var(--accent)">Search</div></div>
+  </div>
+  <div class="funnel-arrow">&#x25BC; 47.2% drop &mdash; no driver available / no quote returned</div>
+  <div class="funnel-wrap">
+    <div class="funnel-label"><span class="stage">Quote Received</span><span class="pct">3,315 &mdash; 52.8%</span></div>
+    <div class="funnel-track"><div class="funnel-fill" style="width:52.8%;background:var(--orange)">Quote</div></div>
+  </div>
+  <div class="funnel-arrow">&#x25BC; 16.3% drop &mdash; rider did not proceed to book</div>
+  <div class="funnel-wrap">
+    <div class="funnel-label"><span class="stage">Booking Made</span><span class="pct">2,776 &mdash; 44.3% of searches</span></div>
+    <div class="funnel-track"><div class="funnel-fill" style="width:44.3%;background:var(--blue)">Booking</div></div>
+  </div>
+  <div class="funnel-arrow">&#x25BC; 44.8% drop &mdash; cancellations by driver or rider</div>
+  <div class="funnel-wrap">
+    <div class="funnel-label"><span class="stage">Trip Completed</span><span class="pct">1,532 &mdash; 24.4% of searches</span></div>
+    <div class="funnel-track"><div class="funnel-fill" style="width:24.4%;background:var(--green)">Complete</div></div>
+  </div>
+
+  <div class="insight-box" style="margin-top:28px">
+    <div class="insight-label">Key Structural Finding</div>
+    <p>The platform loses <strong>47.2%</strong> of all demand at the very first step &mdash; nearly 1 in 2 searches never receives a driver quote. This is a <strong>supply-side failure</strong>, not a UX or pricing failure. Once a rider receives a quote, they book at an 83.7% rate, proving the product and fare are acceptable. The two problem areas are upstream (quote generation) and downstream (post-booking cancellations).</p>
+  </div>
+</div>
+
+<!-- 03 — FUNNEL SEGMENTATION -->
+<div class="section">
+  <div class="section-header">
+    <div class="section-num">03</div>
+    <div class="section-title">Funnel segmentation</div>
+  </div>
+
+  <div class="subsection">
+    <div class="subsection-title">By Time of Day</div>
+
+    <table class="data-table">
+      <thead>
+        <tr><th>Segment</th><th>Searches</th><th>S&rarr;Q</th><th>Q&rarr;B</th><th>B&rarr;C</th><th>End-to-End</th><th>Biggest Drop</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Morning</strong><br><span style="font-size:11px;color:var(--ink-mute)">6&ndash;10 AM</span></td>
+          <td class="mono">1,404</td><td class="mono">49.6%</td><td class="mono">84.6%</td><td class="mono">62.2%</td><td class="mono">26.1%</td>
+          <td><span class="drop-badge drop-search">Search&rarr;Quote</span></td>
+        </tr>
+        <tr>
+          <td><strong>Day</strong><br><span style="font-size:11px;color:var(--ink-mute)">10AM&ndash;5PM</span></td>
+          <td class="mono">1,987</td><td class="mono">68.5%</td><td class="mono">83.3%</td><td class="mono">59.4%</td><td class="mono">33.9%</td>
+          <td><span class="drop-badge drop-booking">Booking&rarr;Complete</span></td>
+        </tr>
+        <tr class="highlight-row">
+          <td><strong>Evening &#x26A0;</strong><br><span style="font-size:11px;color:var(--ink-mute)">5&ndash;9 PM</span></td>
+          <td class="mono">2,528</td><td class="mono text-accent">42.3%</td><td class="mono">85.0%</td><td class="mono text-accent">46.5%</td><td class="mono text-accent">16.7%</td>
+          <td><span class="drop-badge drop-search">Search&rarr;Quote</span></td>
+        </tr>
+        <tr>
+          <td><strong>Night</strong><br><span style="font-size:11px;color:var(--ink-mute)">9PM&ndash;6AM</span></td>
+          <td class="mono">354</td><td class="mono">52.5%</td><td class="mono">76.9%</td><td class="mono">47.6%</td><td class="mono">19.2%</td>
+          <td><span class="drop-badge drop-booking">Booking&rarr;Complete</span></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="subsection">
+    <div class="subsection-title">By Trip Length</div>
+
+    <table class="data-table">
+      <thead>
+        <tr><th>Segment</th><th>Searches</th><th>S&rarr;Q</th><th>Q&rarr;B</th><th>B&rarr;C</th><th>End-to-End</th><th>Biggest Drop</th></tr>
+      </thead>
+      <tbody>
+        <tr class="highlight-row">
+          <td><strong>Short &#x26A0;</strong><br><span style="font-size:11px;color:var(--ink-mute)">&lt; 5 km</span></td>
+          <td class="mono">2,093</td><td class="mono text-accent">41.6%</td><td class="mono">81.1%</td><td class="mono text-accent">47.7%</td><td class="mono text-accent">16.1%</td>
+          <td><span class="drop-badge drop-search">Search&rarr;Quote</span></td>
+        </tr>
+        <tr>
+          <td><strong>Medium</strong><br><span style="font-size:11px;color:var(--ink-mute)">5&ndash;15 km</span></td>
+          <td class="mono">3,256</td><td class="mono">52.2%</td><td class="mono">86.0%</td><td class="mono">57.9%</td><td class="mono">26.0%</td>
+          <td><span class="drop-badge drop-search">Search&rarr;Quote</span></td>
+        </tr>
+        <tr>
+          <td><strong>Long</strong><br><span style="font-size:11px;color:var(--ink-mute)">&gt; 15 km</span></td>
+          <td class="mono">924</td><td class="mono text-green">80.5%</td><td class="mono">81.7%</td><td class="mono">57.4%</td><td class="mono text-green">37.8%</td>
+          <td><span class="drop-badge drop-booking">Booking&rarr;Complete</span></td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="callout">
+      <strong>Supporting data &mdash; Average quotes per search:</strong> Short: 0.70 &nbsp;|&nbsp; Medium: 1.38 &nbsp;|&nbsp; Long: 3.96. The 5.6&times; gap confirms drivers are selectively quoting based on trip economics, not just proximity.
+    </div>
+  </div>
+
+  <div class="subsection">
+    <div class="subsection-title">Hypotheses and validation</div>
+
+    <div class="hypo-card" style="--card-accent:var(--accent)">
+      <div class="hypo-title">H1 &mdash; Driver supply is insufficient at peak Evening hours</div>
+      <div class="hypo-evidence"><strong>Evidence:</strong> Evening has 40% of all search volume (2,528 searches) but the lowest Search&rarr;Quote rate at 42.3% &mdash; a 26pp gap vs Day. The platform is being flooded with demand while driver supply does not scale proportionally. <strong>Verdict: Supported.</strong></div>
+    </div>
+    <div class="hypo-card" style="--card-accent:var(--orange)">
+      <div class="hypo-title">H2 &mdash; Drivers selectively avoid short trips due to low fare economics</div>
+      <div class="hypo-evidence"><strong>Evidence:</strong> Short trips receive 0.70 quotes per search vs 3.96 for Long trips. 58.4% of short trip searches receive zero quotes. A driver 2km away accepting a 3km trip earns less than their fuel cost for the round-trip, creating a structural disincentive. <strong>Verdict: Supported.</strong></div>
+    </div>
+    <div class="hypo-card" style="--card-accent:var(--blue)">
+      <div class="hypo-title">H3 &mdash; Quote-to-Booking is consistently high, so fare and UX are not the problem</div>
+      <div class="hypo-evidence"><strong>Evidence:</strong> Q&rarr;B rates range from 76.9% (Night) to 86.0% (Medium trips) &mdash; a tight band across all segments. Once a rider sees a quote, they almost always book. This means product focus should target upstream (quote generation) and downstream (post-booking cancellations). <strong>Verdict: Supported.</strong></div>
+    </div>
+  </div>
+</div>
+
+<!-- 04 — BOOKING CANCELLATIONS -->
+<div class="section">
+  <div class="section-header">
+    <div class="section-num">04</div>
+    <div class="section-title">Booking cancellations</div>
+  </div>
+
+  <div class="metric-grid">
+    <div class="metric-card" style="--card-accent:var(--accent)">
+      <div class="metric-val">44.7%</div>
+      <div class="metric-lbl">Overall Cancel Rate</div>
+      <div class="metric-sub">1,242 of 2,776 bookings</div>
+    </div>
+    <div class="metric-card" style="--card-accent:var(--orange)">
+      <div class="metric-val">60.6%</div>
+      <div class="metric-lbl">Driver Cancellations</div>
+      <div class="metric-sub">766 of 1,263 recorded</div>
+    </div>
+    <div class="metric-card" style="--card-accent:var(--blue)">
+      <div class="metric-val">39.3%</div>
+      <div class="metric-lbl">Rider Cancellations</div>
+      <div class="metric-sub">496 of 1,263 recorded</div>
+    </div>
+  </div>
+
+  <p>A 44.7% cancellation rate means nearly 1 in 2 bookings does not result in a completed ride. Drivers cancel at 1.5&times; the rate of riders, making driver-side interventions the higher-priority lever.</p>
+
+  <hr class="divider">
+
+  <div class="subsection">
+    <div class="subsection-title">Top 3 driver cancellation reasons</div>
+
+    <div class="reason-bar">
+      <span class="name">NOT_REACHABLE</span>
+      <div class="bar"><div class="fill" style="width:100%"></div></div>
+      <span class="count">212</span>
+    </div>
+    <div class="reason-bar">
+      <span class="name">PICKUP_LOC_TOO_FAR</span>
+      <div class="bar"><div class="fill" style="width:66.5%"></div></div>
+      <span class="count">141</span>
+    </div>
+    <div class="reason-bar">
+      <span class="name">VEHICLE_ISSUE</span>
+      <div class="bar"><div class="fill" style="width:66%"></div></div>
+      <span class="count">140</span>
+    </div>
+    <div class="reason-bar">
+      <span class="name">ACCEPTED_BY_MISSTAKE</span>
+      <div class="bar"><div class="fill" style="width:59.9%"></div></div>
+      <span class="count">127</span>
+    </div>
+  </div>
+
+  <div class="subsection">
+    <div class="subsection-title">By time of day &mdash; top 3 reasons</div>
+
+    <table class="data-table">
+      <thead>
+        <tr><th>Reason</th><th>Morning</th><th>Day</th><th>Evening</th><th>Night</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>NOT_REACHABLE</strong></td>
+          <td class="mono">35</td><td class="mono">90</td><td class="mono">74</td><td class="mono">13</td>
+        </tr>
+        <tr>
+          <td><strong>PICKUP_LOC_TOO_FAR</strong></td>
+          <td class="mono">23</td><td class="mono">55</td><td class="mono text-accent">60</td><td class="mono">3</td>
+        </tr>
+        <tr>
+          <td><strong>VEHICLE_ISSUE</strong></td>
+          <td class="mono">27</td><td class="mono">49</td><td class="mono text-accent">59</td><td class="mono">5</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <p>NOT_REACHABLE peaks during Day (90 cases), likely because riders in office areas are in meetings or noisy environments. PICKUP_LOC_TOO_FAR and VEHICLE_ISSUE both peak in Evening (60 and 59 respectively), suggesting drivers are over-stretched during peak hours &mdash; accepting rides they then cannot service.</p>
+  </div>
+
+  <hr class="divider">
+
+  <div class="subsection">
+    <div class="subsection-title">Driver rating vs cancellation behaviour</div>
+
+    <div class="metric-grid">
+      <div class="metric-card" style="--card-accent:var(--green)">
+        <div class="metric-val">4.79</div>
+        <div class="metric-lbl">Median Rating</div>
+        <div class="metric-sub">All drivers in quotes</div>
+      </div>
+      <div class="metric-card" style="--card-accent:var(--accent)">
+        <div class="metric-val">4.75</div>
+        <div class="metric-lbl">Median Rating</div>
+        <div class="metric-sub">Drivers who cancelled</div>
+      </div>
+      <div class="metric-card" style="--card-accent:var(--orange)">
+        <div class="metric-val">0.04</div>
+        <div class="metric-lbl">Rating Gap</div>
+        <div class="metric-sub">Cancellers vs rest</div>
+      </div>
+    </div>
+
+    <table class="data-table">
+      <thead>
+        <tr><th>Rating Bucket</th><th>Cancel Rate (% of quotes)</th><th>Interpretation</th></tr>
+      </thead>
+      <tbody>
+        <tr class="highlight-row">
+          <td><strong>&lt; 3.0</strong></td>
+          <td class="mono text-accent">25.0%</td>
+          <td>Very high risk &mdash; tiny sample size</td>
+        </tr>
+        <tr>
+          <td><strong>3.0 &ndash; 4.0</strong></td>
+          <td class="mono">8.0%</td>
+          <td>Below median performers</td>
+        </tr>
+        <tr>
+          <td><strong>4.0 &ndash; 4.5</strong></td>
+          <td class="mono">9.5%</td>
+          <td>Mid-tier drivers</td>
+        </tr>
+        <tr>
+          <td><strong>4.5 &ndash; 5.0</strong></td>
+          <td class="mono">7.0%</td>
+          <td>Best-rated, lowest cancel rate</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="insight-box">
+      <div class="insight-label">Rating is a weak signal</div>
+      <p>The 4.5&ndash;5 bucket has the lowest cancellation rate (7%) but accounts for <strong>76% of all cancellations</strong> in absolute terms simply because most drivers fall in this range. A driver's average star rating is an unreliable predictor of cancellation risk. A more reliable signal would be an <strong>accept-to-complete ratio</strong> tracked per driver over a rolling window, flagging drivers who chronically accept and cancel regardless of their average rating.</p>
+    </div>
+  </div>
+</div>
+
+<!-- 05 — RECOMMENDATIONS -->
+<div class="section">
+  <div class="section-header">
+    <div class="section-num">05</div>
+    <div class="section-title">Recommendations</div>
+  </div>
+
+  <div class="rec-card">
+    <div class="rec-num">01</div>
+    <div>
+      <div class="rec-title">Dynamic supply incentives for peak Evening hours</div>
+      <div class="rec-desc">Search&rarr;Quote drops to 42.3% in Evening despite 40% of all volume occurring then. Surge pricing visibility, destination filter nudges, or guaranteed-fare mechanics could unlock driver supply at 5&ndash;9 PM where the gap is largest.</div>
+    </div>
+  </div>
+  <div class="rec-card">
+    <div class="rec-num">02</div>
+    <div>
+      <div class="rec-title">Short-trip fare rebalancing or demand aggregation</div>
+      <div class="rec-desc">Short trips receive 0.70 quotes per search &mdash; 5.6&times; fewer than Long trips. Restructure fare minimums for short trips to improve driver economics, or explore pooling to batch short trips together and increase per-driver payout.</div>
+    </div>
+  </div>
+  <div class="rec-card">
+    <div class="rec-num">03</div>
+    <div>
+      <div class="rec-title">In-app rider reachability features</div>
+      <div class="rec-desc">NOT_REACHABLE is the #1 driver cancellation reason (212 cases). Auto-notifications to riders when a driver is 2&ndash;3 minutes away, plus in-app call shortcuts with one tap, would materially reduce this category.</div>
+    </div>
+  </div>
+  <div class="rec-card">
+    <div class="rec-num">04</div>
+    <div>
+      <div class="rec-title">Pickup location confirmation at booking</div>
+      <div class="rec-desc">PICKUP_LOC_TOO_FAR (141 cases) spikes in Evening. Showing the driver's distance to the displayed pickup point before confirmation &mdash; with a one-tap correction &mdash; would reduce this reason significantly.</div>
+    </div>
+  </div>
+  <div class="rec-card">
+    <div class="rec-num">05</div>
+    <div>
+      <div class="rec-title">Accept-quality score (beyond star rating)</div>
+      <div class="rec-desc">Star ratings show only a 0.04 median gap between cancellers and non-cancellers. Build a rolling accept-to-complete ratio per driver and use it to deprioritise high-cancellation drivers in quote dispatch during peak hours.</div>
+    </div>
+  </div>
+</div>
+
+</main>
+
+<div class="case-footer">
+  <span>Ishaan Tandon &middot; Datathon 2026</span>
+  <a href="../">&larr; Back to portfolio</a>
+</div>
+
+</body>
+</html>

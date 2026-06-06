@@ -629,6 +629,19 @@
   @media (max-width: 880px) {
     .featured-case { grid-template-columns: 1fr; }
   }
+
+  .featured-cases-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    margin-bottom: 32px;
+  }
+  .featured-cases-grid .featured-case {
+    grid-template-columns: 1fr;
+  }
+  @media (max-width: 880px) {
+    .featured-cases-grid { grid-template-columns: 1fr; }
+  }
   .featured-visual {
     background: #1a1a1a;
     color: #fdfbf6;
@@ -2331,39 +2344,75 @@
       </div>
 
       <!-- FEATURED -->
-      <a href="https://optimus-family-hub.vercel.app/" target="_blank" rel="noopener" class="featured-case reveal" style="text-decoration: none;">
-        <div class="featured-visual">
-          <div class="featured-id">Featured Case &middot; 01</div>
-          <div>
-            <div class="featured-quote">A spouse with a named card is a financial participant. A spouse who receives transfers is a dependent. That distinction is the product.</div>
-            <div class="featured-quote-attr">Strategic Frame &middot; Optimus Family Hub</div>
-          </div>
-        </div>
-        <div class="featured-body">
-          <div class="featured-tag">Neobank &middot; Family Banking &middot; India 2025</div>
-          <h3>Optimus Family Hub</h3>
-          <p class="featured-context">A household retention engine, designed end-to-end as if shipping it. The competition isn't another neobank, it's the UPI transfer.</p>
-          <div class="featured-pillars">
-            <div class="pillar">
-              <div class="pillar-label">KPI Hierarchy</div>
-              <div class="pillar-value">Retention &#x2192; volume &#x2192; activation</div>
-            </div>
-            <div class="pillar">
-              <div class="pillar-label">Validation</div>
-              <div class="pillar-value">3 sequential gate experiments</div>
-            </div>
-            <div class="pillar">
-              <div class="pillar-label">Discovery</div>
-              <div class="pillar-value">Behavioural + surface + push</div>
-            </div>
-            <div class="pillar">
-              <div class="pillar-label">UX</div>
-              <div class="pillar-value">14 screens &middot; 4 flows &middot; annotated</div>
+      <div class="featured-cases-grid">
+        <a href="https://optimus-family-hub.vercel.app/" target="_blank" rel="noopener" class="featured-case reveal" style="text-decoration: none;">
+          <div class="featured-visual">
+            <div class="featured-id">Featured Case &middot; 01</div>
+            <div>
+              <div class="featured-quote">A spouse with a named card is a financial participant. A spouse who receives transfers is a dependent. That distinction is the product.</div>
+              <div class="featured-quote-attr">Strategic Frame &middot; Optimus Family Hub</div>
             </div>
           </div>
-          <span class="featured-link">Read full case study &#x2192;</span>
-        </div>
-      </a>
+          <div class="featured-body">
+            <div class="featured-tag">Neobank &middot; Family Banking &middot; India 2025</div>
+            <h3>Optimus Family Hub</h3>
+            <p class="featured-context">A household retention engine, designed end-to-end as if shipping it. The competition isn't another neobank, it's the UPI transfer.</p>
+            <div class="featured-pillars">
+              <div class="pillar">
+                <div class="pillar-label">KPI Hierarchy</div>
+                <div class="pillar-value">Retention &#x2192; volume &#x2192; activation</div>
+              </div>
+              <div class="pillar">
+                <div class="pillar-label">Validation</div>
+                <div class="pillar-value">3 sequential gate experiments</div>
+              </div>
+              <div class="pillar">
+                <div class="pillar-label">Discovery</div>
+                <div class="pillar-value">Behavioural + surface + push</div>
+              </div>
+              <div class="pillar">
+                <div class="pillar-label">UX</div>
+                <div class="pillar-value">14 screens &middot; 4 flows &middot; annotated</div>
+              </div>
+            </div>
+            <span class="featured-link">Read full case study &#x2192;</span>
+          </div>
+        </a>
+
+        <a href="namma-yatri/" class="featured-case reveal" style="text-decoration: none;">
+          <div class="featured-visual">
+            <div class="featured-id">Featured Case &middot; 02</div>
+            <div>
+              <div class="featured-quote">Nearly 1 in 2 searches never receives a driver quote. The supply gap is the product problem, not the fare.</div>
+              <div class="featured-quote-attr">Funnel Finding &middot; Namma Yatri Datathon</div>
+            </div>
+          </div>
+          <div class="featured-body">
+            <div class="featured-tag">Marketplace &middot; Funnel Analysis &middot; Datathon 2026</div>
+            <h3>Namma Yatri Datathon</h3>
+            <p class="featured-context">A 2.5-hour timed analysis on 6,273 ride searches. Diagnosing supply gaps, short-trip avoidance, and a 44.7% cancellation rate.</p>
+            <div class="featured-pillars">
+              <div class="pillar">
+                <div class="pillar-label">KPI Focus</div>
+                <div class="pillar-value">Search &#x2192; Quote &#x2192; Complete</div>
+              </div>
+              <div class="pillar">
+                <div class="pillar-label">Key Finding</div>
+                <div class="pillar-value">47% drop at first funnel stage</div>
+              </div>
+              <div class="pillar">
+                <div class="pillar-label">Cancellation Rate</div>
+                <div class="pillar-value">44.7% post-booking</div>
+              </div>
+              <div class="pillar">
+                <div class="pillar-label">Driver RCA</div>
+                <div class="pillar-value">NOT_REACHABLE &middot; PICKUP_TOO_FAR</div>
+              </div>
+            </div>
+            <span class="featured-link">Read full analysis &#x2192;</span>
+          </div>
+        </a>
+      </div>
 
       <!-- MINI CASES -->
       <div class="scroll-hint">Drag to explore &rarr;</div>
