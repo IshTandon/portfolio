@@ -593,6 +593,51 @@
     font-size: 0.96em;
   }
 
+  /* Ladder-style multi-role timeline */
+  .work-ladder {
+    position: relative;
+    padding-left: 28px;
+    margin-top: 8px;
+  }
+  .work-ladder::before {
+    content: '';
+    position: absolute;
+    left: 7px;
+    top: 10px;
+    bottom: 10px;
+    width: 2px;
+    background: var(--rule);
+    border-radius: 1px;
+  }
+  .work-ladder-role {
+    position: relative;
+    padding-bottom: 36px;
+  }
+  .work-ladder-role:last-child {
+    padding-bottom: 0;
+  }
+  .work-ladder-role::before {
+    content: '';
+    position: absolute;
+    left: -23px;
+    top: 8px;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: var(--accent);
+    border: 2px solid var(--paper);
+    box-shadow: 0 0 0 2px var(--accent);
+  }
+  .work-ladder-role-title {
+    font-size: 14px;
+    color: var(--ink-soft);
+    margin-bottom: 14px;
+  }
+  .work-ladder-role-title strong {
+    color: var(--ink);
+    font-weight: 500;
+  }
+
   @media (max-width: 720px) {
     .work-tab { min-width: 60px; padding: 12px 4px 14px; }
     .work-tab-logo { width: 40px; height: 40px; padding: 3px; }
@@ -1264,6 +1309,8 @@
   [data-theme="dark"] .portrait { box-shadow: 0 20px 40px rgba(0,0,0,0.5); }
   [data-theme="dark"] .work-point { background: #1a1a1a; border-color: #333; color: var(--ink-soft); }
   [data-theme="dark"] .work-point strong { color: var(--ink); }
+  [data-theme="dark"] .work-ladder::before { background: #333; }
+  [data-theme="dark"] .work-ladder-role::before { border-color: #121212; }
   [data-theme="dark"] .btn-primary { background: #e8e4dc; color: #121212; }
   [data-theme="dark"] .btn-primary:hover { background: var(--accent); color: #fff; }
   [data-theme="dark"] .btn-ghost { border-color: #e8e4dc; color: #e8e4dc; }
@@ -1418,7 +1465,7 @@
   /* BLOG / WRITING */
   .writing-grid {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(2, 1fr);
     gap: 24px;
   }
   @media (max-width: 800px) { .writing-grid { grid-template-columns: 1fr; } }
@@ -2060,30 +2107,32 @@
           <div class="work-panel-logo"><img src="logo-mmt.png" alt="MakeMyTrip" loading="lazy"></div>
           <div class="work-panel-meta">
             <h3>MakeMyTrip</h3>
-            <div class="role-line"><strong>Associate Product Manager</strong> &middot; Homestays &amp; Villas, B2C and B2B &middot; Apr 2023 – May 2024</div>
+            <div class="role-line">Homestays &amp; Villas, B2C and B2B</div>
           </div>
-        </div>
-        <div class="work-points">
-          <div class="work-point">Optimized ranking and personalization for Homestays search, using user search history and booking patterns to lift <strong>conversion by <span class="metric-num">8%</span></strong> and <strong>engagement by <span class="metric-num">15%</span></strong></div>
-          <div class="work-point">Defined PRDs and partnered with engineering, category, and data science to ship a <strong>duplicate-listing feature for <span class="metric-num">30k+</span> hosts</strong>, letting them list one property across multiple formats; lifted occupancy <span class="metric-num">17%</span> (<span class="metric-num">10,200+</span> room nights) and bookings <span class="metric-num">12%</span> via an inventory sync system</div>
-          <div class="work-point">Boosted <strong>ratings and reviews by <span class="metric-num">30%</span></strong> across properties with a low-cost QR-code mechanic built on existing host touchpoints</div>
-          <div class="work-point">Ran end-to-end funnel analysis on the customer journey, pairing it with market research and A/B tests to drive a <strong><span class="metric-num">9%</span> conversion lift</strong> and <strong>Rs <span class="metric-num">7M</span> in incremental revenue</strong></div>
         </div>
 
-        <div class="work-panel-head" style="margin-top: 48px;">
-          <div class="work-panel-logo"><img src="logo-mmt.png" alt="MakeMyTrip" loading="lazy"></div>
-          <div class="work-panel-meta">
-            <h3>MakeMyTrip</h3>
-            <div class="role-line"><strong>Product Manager</strong> &middot; Homestays &amp; Villas, B2C and B2B &middot; May 2024 – Mar 2025 &middot; Promoted from Associate PM</div>
+        <div class="work-ladder">
+          <div class="work-ladder-role">
+            <div class="work-ladder-role-title"><strong>Product Manager</strong> · May 2024 – Mar 2025</div>
+            <div class="work-points">
+              <div class="work-point">Introduced <strong>location-based interventions</strong> on the listing page, improving the relevance of nearby landmarks for premium 4 and 5-star properties to lift conversion</div>
+              <div class="work-point">Devised a <strong>semantic search ranking engine</strong> integrating user-intent embeddings with property relevance signals</div>
+              <div class="work-point">Co-built <strong>knowledge graph-based persuasion and image contextualization layers</strong>, powering conversion-uplift experiments</div>
+              <div class="work-point">Ran dynamic discounting experiments based on user history and price elasticity, lifting <strong>net revenue per user by ~<span class="metric-num">3%</span></strong></div>
+              <div class="work-point">Configured new filters and collections for the homestay funnel to build <strong>category awareness</strong></div>
+              <div class="work-point">Built an <strong>NLP chatbot</strong> automating <span class="metric-num">90%</span> of user queries, cutting resolution time <span class="metric-num">25%</span> and improving CSAT across <span class="metric-num">1M+</span> users</div>
+            </div>
           </div>
-        </div>
-        <div class="work-points">
-          <div class="work-point">Introduced <strong>location-based interventions</strong> on the listing page, improving the relevance of nearby landmarks for premium 4 and 5-star properties to lift conversion</div>
-          <div class="work-point">Devised a <strong>semantic search ranking engine</strong> integrating user-intent embeddings with property relevance signals</div>
-          <div class="work-point">Co-built <strong>knowledge graph-based persuasion and image contextualization layers</strong>, powering conversion-uplift experiments</div>
-          <div class="work-point">Ran dynamic discounting experiments based on user history and price elasticity, lifting <strong>net revenue per user by ~<span class="metric-num">3%</span></strong></div>
-          <div class="work-point">Configured new filters and collections for the homestay funnel to build <strong>category awareness</strong></div>
-          <div class="work-point">Built an <strong>NLP chatbot</strong> automating <span class="metric-num">90%</span> of user queries, cutting resolution time <span class="metric-num">25%</span> and improving CSAT across <span class="metric-num">1M+</span> users</div>
+
+          <div class="work-ladder-role">
+            <div class="work-ladder-role-title"><strong>Associate Product Manager</strong> · Apr 2023 – May 2024</div>
+            <div class="work-points">
+              <div class="work-point">Optimized ranking and personalization for Homestays search, using user search history and booking patterns to lift <strong>conversion by <span class="metric-num">8%</span></strong> and <strong>engagement by <span class="metric-num">15%</span></strong></div>
+              <div class="work-point">Defined PRDs and partnered with engineering, category, and data science to ship a <strong>duplicate-listing feature for <span class="metric-num">30k+</span> hosts</strong>, letting them list one property across multiple formats; lifted occupancy <span class="metric-num">17%</span> (<span class="metric-num">10,200+</span> room nights) and bookings <span class="metric-num">12%</span> via an inventory sync system</div>
+              <div class="work-point">Boosted <strong>ratings and reviews by <span class="metric-num">30%</span></strong> across properties with a low-cost QR-code mechanic built on existing host touchpoints</div>
+              <div class="work-point">Ran end-to-end funnel analysis on the customer journey, pairing it with market research and A/B tests to drive a <strong><span class="metric-num">9%</span> conversion lift</strong> and <strong>Rs <span class="metric-num">7M</span> in incremental revenue</strong></div>
+            </div>
+          </div>
         </div>
       </div>
 
@@ -2634,12 +2683,6 @@
           <span class="writing-card-tag">Naukri &middot; Agentic AI</span>
           <h4>How We Built V2V Agentic Call Screening at Naukri</h4>
           <p>Accelerating entry-level fulfillment by 30% across 50K+ monthly postings. How a real-time agentic loop replaced static IVR trees with STT, action classification, and automated nudges at 90%+ accuracy.</p>
-          <span class="writing-badge">Coming soon</span>
-        </div>
-        <div class="writing-card">
-          <span class="writing-card-tag">MakeMyTrip &middot; Career growth</span>
-          <h4>From Associate PM to PM in 13 Months: What Changed</h4>
-          <p>Going from ranking personalization to owning semantic search and dynamic discounting. How a host-side feature (30k+ hosts, 17% occupancy lift) became the case for the promotion, and what shifted in scope after.</p>
           <span class="writing-badge">Coming soon</span>
         </div>
         <div class="writing-card">
