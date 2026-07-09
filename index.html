@@ -949,6 +949,13 @@
     width: 280px; height: 280px;
     background: radial-gradient(circle, rgba(184, 66, 31, 0.4) 0%, transparent 60%);
   }
+  .build-visual.a::after {
+    content: '';
+    position: absolute;
+    top: -10%; left: 30%;
+    width: 300px; height: 300px;
+    background: radial-gradient(circle, rgba(34, 197, 94, 0.35) 0%, transparent 60%);
+  }
   .build-visual.m::after {
     content: '';
     position: absolute;
@@ -2017,7 +2024,7 @@
       <span>1M+ MAU growth</span><span class="marquee-dot">&bull;</span>
       <span>$5M+ RFPs won</span><span class="marquee-dot">&bull;</span>
       <span>50% faster conversion</span><span class="marquee-dot">&bull;</span>
-      <span>6 AI products shipped</span><span class="marquee-dot">&bull;</span>
+      <span>7 AI products shipped</span><span class="marquee-dot">&bull;</span>
       <span>3 marketplaces</span><span class="marquee-dot">&bull;</span>
       <span>0&#x2192;1 builder</span><span class="marquee-dot">&bull;</span>
       <span>30% fulfillment lift</span><span class="marquee-dot">&bull;</span>
@@ -2025,7 +2032,7 @@
       <span>1M+ MAU growth</span><span class="marquee-dot">&bull;</span>
       <span>$5M+ RFPs won</span><span class="marquee-dot">&bull;</span>
       <span>50% faster conversion</span><span class="marquee-dot">&bull;</span>
-      <span>6 AI products shipped</span><span class="marquee-dot">&bull;</span>
+      <span>7 AI products shipped</span><span class="marquee-dot">&bull;</span>
       <span>3 marketplaces</span><span class="marquee-dot">&bull;</span>
       <span>0&#x2192;1 builder</span><span class="marquee-dot">&bull;</span>
     </div>
@@ -2302,9 +2309,43 @@
 
       <div class="builds-grid">
         <div class="build reveal">
-          <div class="build-visual h">
+          <div class="build-visual a">
             <div class="build-mark-big">
               <span class="small">01</span>
+              AgentDict
+            </div>
+          </div>
+          <div class="build-body">
+            <h4>AgentDict</h4>
+            <div class="build-tag">Gamified AI Learning App &middot; Duolingo for AI &middot; PWA</div>
+            <div class="build-structured">
+              <div class="build-section">
+                <span class="build-label">Problem</span>
+                <p>AI vocabulary compounds weekly &mdash; MCP, agentic loops, guardrails &mdash; and AI PMs are expected to be fluent in all of it. Glossaries are static walls of text; nothing makes AI terminology <em>stick</em>, and nothing helps in the panic moment mid-meeting when someone drops a term you don&rsquo;t know.</p>
+              </div>
+              <div class="build-section">
+                <span class="build-label">Approach</span>
+                <p>108 terms across 9 categories with original plain-English definitions, each with an &ldquo;in the meeting&rdquo; scenario and quiz. A Daily 5 session loop (2 new + 3 spaced-repetition reviews) with XP, levels, and streaks tied to session completion, not passive visits. Panic search as the acquisition wedge. An interactive periodic table of AI (17 elements, 4 clickable &ldquo;reactions&rdquo; like RAG chatbot and agentic loop, with step-by-step walkthroughs).</p>
+              </div>
+              <div class="build-section">
+                <span class="build-label">Outcome</span>
+                <p>Live PWA with the full learning loop: session engine, spaced repetition via localStorage, quiz scoring, streak system, trending terms, and curated &ldquo;go deeper&rdquo; resources per term. Built solo in agentic mode, shipped and iterated daily.</p>
+              </div>
+            </div>
+            <span class="build-metric">108 terms</span>
+            <span class="build-metric" style="margin-left:6px;">Daily 5 loop</span>
+            <span class="build-metric" style="margin-left:6px;">Periodic table of AI</span>
+            <div class="build-stack">
+              <span>Next.js</span><span>TypeScript</span><span>Cursor</span><span>Agentic Build</span><span>Gamification</span><span>Tailwind</span><span>Vercel</span>
+            </div>
+            <a href="https://ai-agent-dictionary.vercel.app/" target="_blank" rel="noopener" class="build-cta">Try it live &#x2197;</a>
+          </div>
+        </div>
+
+        <div class="build reveal">
+          <div class="build-visual h">
+            <div class="build-mark-big">
+              <span class="small">02</span>
               HealthIsh
             </div>
           </div>
@@ -2336,7 +2377,7 @@
         <div class="build reveal">
           <div class="build-visual m">
             <div class="build-mark-big">
-              <span class="small">02</span>
+              <span class="small">03</span>
               MindTheGap
             </div>
           </div>
@@ -2369,7 +2410,7 @@
           <div class="build-visual" style="background: #0A1628;">
             <div style="position:absolute;top:-20%;right:-15%;width:300px;height:300px;background:radial-gradient(circle, rgba(212, 175, 55, 0.35) 0%, transparent 60%);pointer-events:none;"></div>
             <div class="build-mark-big" style="font-size:64px;">
-              <span class="small">03</span>
+              <span class="small">04</span>
               FIFA World<br>Cup'26
             </div>
           </div>
@@ -2398,37 +2439,6 @@
               <span>Next.js</span><span>TypeScript</span><span>Vercel</span><span>API-Football</span><span>Claude API</span><span>Zustand</span><span>SWR</span>
             </div>
             <a href="https://bring-it-home.vercel.app" target="_blank" rel="noopener" class="build-cta">Try it live &#x2197;</a>
-          </div>
-        </div>
-
-        <div class="build reveal">
-          <div class="build-visual h" style="background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);">
-            <div class="build-mark-big">
-              <span class="small">04</span>
-              SpendSmart
-            </div>
-          </div>
-          <div class="build-body">
-            <h4>SpendSmart</h4>
-            <div class="build-tag">Personal Finance Dashboard &middot; Web App</div>
-            <div class="build-structured">
-              <div class="build-section">
-                <span class="build-label">Problem</span>
-                <p>Tracking personal expenses is tedious. Most people either don't track or lose consistency after a week. Existing tools are bloated or require bank integrations that feel risky.</p>
-              </div>
-              <div class="build-section">
-                <span class="build-label">Approach</span>
-                <p>A clean, fast dashboard for manual expense logging with visual breakdowns by category, time period, and spending trends. Low-friction input, high-clarity output.</p>
-              </div>
-              <div class="build-section">
-                <span class="build-label">Outcome</span>
-                <p>Functional web app with intuitive dashboard, category-wise analytics, and trend visualization. Built solo, deployed on Vercel.</p>
-              </div>
-            </div>
-            <div class="build-stack">
-              <span>React</span><span>Vercel</span><span>Dashboard</span><span>Analytics</span>
-            </div>
-            <a href="https://spendsmart-sigma.vercel.app/dashboard" target="_blank" rel="noopener" class="build-cta">Try it live &#x2197;</a>
           </div>
         </div>
       </div>
@@ -2680,6 +2690,12 @@
       </div>
       <div class="writing-grid reveal">
         <div class="writing-card">
+          <span class="writing-card-tag">AgentDict &middot; Agentic Build</span>
+          <h4>How I Built Duolingo for AI Terminology Solo with Cursor</h4>
+          <p>108 terms, spaced repetition, a periodic table of AI, and a full gamification loop &mdash; shipped in agentic mode with zero engineering team. A build log on going from &ldquo;AI PMs can&rsquo;t keep up with vocabulary&rdquo; to a live PWA.</p>
+          <span class="writing-badge">Coming soon</span>
+        </div>
+        <div class="writing-card">
           <span class="writing-card-tag">Naukri &middot; Agentic AI</span>
           <h4>How We Built V2V Agentic Call Screening at Naukri</h4>
           <p>Accelerating entry-level fulfillment by 30% across 50K+ monthly postings. How a real-time agentic loop replaced static IVR trees with STT, action classification, and automated nudges at 90%+ accuracy.</p>
@@ -2701,7 +2717,7 @@
       <div class="proof-strip reveal">
         <span class="proof-badge"><strong>5+</strong> years shipping product</span>
         <span class="proof-badge"><strong>3</strong> marketplaces</span>
-        <span class="proof-badge"><strong>6</strong> AI products shipped</span>
+        <span class="proof-badge"><strong>7</strong> AI products shipped</span>
         <span class="proof-badge"><strong>0&#x2192;1</strong> builder</span>
         <span class="proof-badge"><strong>4</strong> industries</span>
       </div>
