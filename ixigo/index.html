@@ -1,0 +1,906 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Reimagining International Travel for Bharat — Ishaan Tandon</title>
+<meta name="description" content="An AI-native international booking experience for first-time travellers from tier 2/3 India. Product case study with a working prototype.">
+<meta property="og:title" content="Reimagining International Travel for Bharat — Ishaan Tandon">
+<meta property="og:description" content="An AI-native international booking experience for first-time travellers from tier 2/3 India. Product case study with a working prototype.">
+<meta property="og:type" content="website">
+<meta property="og:image" content="../og-card.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Reimagining International Travel for Bharat — Ishaan Tandon">
+<meta name="twitter:description" content="An AI-native international booking experience for first-time travellers from tier 2/3 India. Product case study with a working prototype.">
+<meta name="twitter:image" content="../og-card.png">
+<meta name="theme-color" content="#f4f0e8">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='16' fill='%23b8421f'/><text x='50' y='68' font-family='serif' font-size='48' font-weight='600' fill='white' text-anchor='middle'>IT</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #f4f0e8;
+    --bg-warm: #ece6d8;
+    --ink: #1a1a1a;
+    --ink-soft: #4a4a4a;
+    --ink-mute: #8a857d;
+    --rule: #d9d2c4;
+    --accent: #b8421f;
+    --accent-soft: #c75b3a;
+    --accent-mute: rgba(184, 66, 31, 0.08);
+    --paper: #fdfbf6;
+    --blue: #2a6cc9;
+    --green: #2a9c5c;
+    --orange: #e07b30;
+    --purple: #6a4cc9;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--bg);
+    color: var(--ink);
+    font-family: 'Inter', sans-serif;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+  ::selection { background: var(--accent); color: var(--paper); }
+  a { color: inherit; text-decoration: none; }
+
+  /* BACK LINK */
+  .back-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--ink-mute);
+    padding: 24px 40px;
+    transition: color 0.2s;
+  }
+  .back-link:hover { color: var(--accent); }
+
+  /* COVER */
+  .cover {
+    background: var(--ink);
+    color: var(--paper);
+    padding: 80px 40px 64px;
+    position: relative;
+    overflow: hidden;
+  }
+  .cover::before {
+    content: '';
+    position: absolute;
+    top: -80px; right: -80px;
+    width: 400px; height: 400px;
+    border-radius: 50%;
+    background: var(--accent);
+    opacity: 0.15;
+  }
+  .cover-inner {
+    max-width: 900px;
+    margin: 0 auto;
+    position: relative;
+    z-index: 2;
+  }
+  .cover-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--accent-soft);
+    margin-bottom: 20px;
+  }
+  .cover h1 {
+    font-family: 'Playfair Display', serif;
+    font-weight: 700;
+    font-size: clamp(40px, 6vw, 64px);
+    line-height: 1.05;
+    letter-spacing: -0.03em;
+    margin-bottom: 20px;
+  }
+  .cover h1 em {
+    font-style: italic;
+    font-weight: 500;
+    color: var(--accent-soft);
+  }
+  .cover-desc {
+    font-size: 17px;
+    line-height: 1.6;
+    color: rgba(253, 251, 246, 0.7);
+    max-width: 640px;
+    margin-bottom: 16px;
+  }
+  .cover-meta {
+    display: flex;
+    gap: 40px;
+    flex-wrap: wrap;
+  }
+  .cover-meta-item {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+  .cover-meta-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: rgba(253, 251, 246, 0.4);
+  }
+  .cover-meta-value {
+    font-size: 14px;
+    color: rgba(253, 251, 246, 0.85);
+  }
+
+  /* MAIN */
+  main {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 56px 40px 80px;
+  }
+
+  /* SECTION */
+  .section { margin-bottom: 72px; }
+  .section-header {
+    display: flex;
+    align-items: baseline;
+    gap: 16px;
+    margin-bottom: 32px;
+    padding-bottom: 12px;
+    border-bottom: 2px solid var(--ink);
+  }
+  .section-num {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    color: var(--accent);
+    letter-spacing: 0.1em;
+  }
+  .section-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 28px;
+    font-weight: 600;
+    letter-spacing: -0.02em;
+  }
+
+  .subsection { margin-bottom: 36px; }
+  .subsection-title {
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+    margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .subsection-title::before {
+    content: '';
+    display: inline-block;
+    width: 20px;
+    height: 2px;
+    background: var(--accent);
+  }
+
+  p { margin-bottom: 14px; color: var(--ink-soft); }
+  p strong { color: var(--ink); font-weight: 600; }
+
+  /* METRIC CARDS */
+  .metric-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    gap: 12px;
+    margin-bottom: 28px;
+  }
+  .metric-card {
+    background: var(--paper);
+    border: 1px solid var(--rule);
+    border-radius: 8px;
+    padding: 22px 18px;
+    position: relative;
+    overflow: hidden;
+  }
+  .metric-card::after {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+    background: var(--card-accent, var(--accent));
+  }
+  .metric-val {
+    font-family: 'Playfair Display', serif;
+    font-size: 34px;
+    font-weight: 600;
+    color: var(--ink);
+    line-height: 1;
+    margin-bottom: 6px;
+  }
+  .metric-lbl {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--ink-mute);
+  }
+  .metric-sub {
+    font-size: 12px;
+    color: var(--ink-mute);
+    margin-top: 4px;
+  }
+
+  /* FUNNEL */
+  .funnel-wrap { margin-bottom: 8px; }
+  .funnel-label {
+    display: flex;
+    justify-content: space-between;
+    font-size: 12px;
+    margin-bottom: 4px;
+  }
+  .funnel-label .stage { font-weight: 500; color: var(--ink); }
+  .funnel-label .pct { font-family: 'JetBrains Mono', monospace; color: var(--ink-mute); font-size: 11px; }
+  .funnel-track {
+    background: var(--rule);
+    border-radius: 4px;
+    height: 30px;
+    position: relative;
+    overflow: hidden;
+  }
+  .funnel-fill {
+    height: 100%;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    padding-left: 12px;
+    font-size: 11px;
+    font-weight: 600;
+    color: white;
+  }
+  .funnel-arrow {
+    text-align: center;
+    font-size: 11px;
+    color: var(--ink-mute);
+    margin: 4px 0 8px;
+    font-family: 'JetBrains Mono', monospace;
+  }
+
+  /* TABLE */
+  .data-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+    margin-bottom: 20px;
+  }
+  .data-table th {
+    background: var(--ink);
+    color: var(--paper);
+    padding: 10px 14px;
+    text-align: left;
+    font-size: 11px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    font-weight: 500;
+  }
+  .data-table td {
+    padding: 10px 14px;
+    border-bottom: 1px solid var(--rule);
+    vertical-align: middle;
+  }
+  .data-table tr:hover td { background: var(--bg-warm); }
+  .data-table .mono {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+  }
+
+  /* INSIGHT BOX */
+  .insight-box {
+    background: var(--ink);
+    color: var(--paper);
+    border-radius: 8px;
+    padding: 22px 26px;
+    margin-bottom: 20px;
+  }
+  .insight-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--accent-soft);
+    margin-bottom: 10px;
+  }
+  .insight-box p { color: rgba(253, 251, 246, 0.75); margin-bottom: 0; }
+  .insight-box strong { color: var(--paper); }
+
+  /* HYPOTHESIS CARDS */
+  .hypo-card {
+    background: var(--paper);
+    border: 1px solid var(--rule);
+    border-left: 4px solid var(--card-accent, var(--accent));
+    border-radius: 0 8px 8px 0;
+    padding: 18px 22px;
+    margin-bottom: 14px;
+  }
+  .hypo-title {
+    font-weight: 600;
+    font-size: 14px;
+    margin-bottom: 8px;
+    color: var(--ink);
+  }
+  .hypo-evidence {
+    font-size: 13px;
+    color: var(--ink-soft);
+    line-height: 1.6;
+  }
+  .hypo-evidence strong { color: var(--ink); }
+
+  /* RECOMMENDATION CARDS */
+  .rec-card {
+    background: var(--paper);
+    border: 1px solid var(--rule);
+    border-radius: 8px;
+    padding: 20px 22px;
+    margin-bottom: 12px;
+    display: flex;
+    gap: 18px;
+    align-items: flex-start;
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+  .rec-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(0,0,0,0.06);
+  }
+  .rec-num {
+    font-family: 'Playfair Display', serif;
+    font-size: 36px;
+    color: var(--rule);
+    line-height: 1;
+    flex-shrink: 0;
+  }
+  .rec-title {
+    font-weight: 600;
+    font-size: 14px;
+    margin-bottom: 6px;
+    color: var(--ink);
+  }
+  .rec-desc {
+    font-size: 13px;
+    color: var(--ink-soft);
+    line-height: 1.55;
+  }
+
+  .callout {
+    background: #fff8e8;
+    border: 1px solid #f0d88a;
+    border-radius: 8px;
+    padding: 16px 20px;
+    margin-bottom: 20px;
+    font-size: 13px;
+    color: var(--ink-soft);
+  }
+  .callout strong { color: var(--ink); }
+
+  .design-callout {
+    background: var(--accent-mute);
+    border: 1px solid rgba(184, 66, 31, 0.15);
+    border-radius: 8px;
+    padding: 18px 22px;
+    margin-bottom: 20px;
+    font-size: 13.5px;
+    color: var(--ink-soft);
+    line-height: 1.6;
+  }
+  .design-callout strong { color: var(--ink); }
+
+  hr.divider {
+    border: none;
+    border-top: 1px solid var(--rule);
+    margin: 36px 0;
+  }
+
+  /* FOOTER */
+  .case-footer {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 0 40px 48px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-top: 1px solid var(--rule);
+    padding-top: 24px;
+  }
+  .case-footer span {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    color: var(--ink-mute);
+    letter-spacing: 0.06em;
+  }
+  .case-footer a {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--accent);
+    transition: color 0.2s;
+  }
+  .case-footer a:hover { color: var(--ink); }
+
+  .highlight-row { background: rgba(184, 66, 31, 0.04); }
+  .text-accent { color: var(--accent); font-weight: 600; }
+  .text-green { color: var(--green); font-weight: 600; }
+
+  .metric-card img {
+    max-width: 100%;
+    width: 100%;
+    height: auto;
+    display: block;
+    border-radius: 8px;
+  }
+
+  @media (max-width: 600px) {
+    .cover { padding: 48px 24px 40px; }
+    main { padding: 32px 20px 48px; }
+    .back-link { padding: 16px 20px; }
+    .cover h1 { font-size: 36px; }
+    .cover-meta { gap: 20px; }
+    .cover-meta-item { min-width: 42%; }
+    .case-footer { padding: 16px 20px 32px; flex-direction: column; gap: 12px; align-items: flex-start; }
+    .data-table { font-size: 11px; }
+    .data-table th, .data-table td { padding: 8px 8px; }
+    .subsection,
+    .table-scroll {
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+    }
+    .metric-grid { grid-template-columns: 1fr !important; }
+    .metric-val { font-size: 26px; }
+    .funnel-label { flex-wrap: wrap; gap: 4px; }
+    .funnel-label .pct { font-size: 12px; }
+    .rec-card { padding: 16px 18px; }
+    .rec-num { font-size: 28px; }
+    .insight-box { padding: 18px 20px; }
+  }
+
+  @media print {
+    body { background: white; }
+    .cover { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+    .back-link { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<a href="/portfolio/" class="back-link">&larr; Portfolio</a>
+
+<!-- COVER -->
+<div class="cover">
+  <div class="cover-inner">
+    <div class="cover-label">ixigo &middot; Product Case Study 2026</div>
+    <h1>Reimagining International Travel<br><em>for Bharat</em></h1>
+    <p class="cover-desc">Closing the confidence gap for the first-time international traveller from tier 2/3 India. A product case study with a working prototype.</p>
+    <p class="cover-meta-label" style="text-transform: none; letter-spacing: 0.04em; font-size: 12px; margin-bottom: 36px; max-width: 640px; line-height: 1.5;">Written as a submission for an ixigo product case study, July 2026. Not affiliated with ixigo.</p>
+    <div class="cover-meta">
+      <div class="cover-meta-item">
+        <span class="cover-meta-label">Context</span>
+        <span class="cover-meta-value">PM Case Study &middot; 2026</span>
+      </div>
+      <div class="cover-meta-item">
+        <span class="cover-meta-label">Segment</span>
+        <span class="cover-meta-value">First-time international traveller</span>
+      </div>
+      <div class="cover-meta-item">
+        <span class="cover-meta-label">Focus</span>
+        <span class="cover-meta-value">AI-native booking experience</span>
+      </div>
+      <div class="cover-meta-item">
+        <span class="cover-meta-label">Output</span>
+        <span class="cover-meta-value">Strategy doc + live prototype</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<main>
+
+<!-- 00 THE PROBLEM -->
+<div class="section">
+  <div class="section-header">
+    <div class="section-num">00</div>
+    <div class="section-title">The problem</div>
+  </div>
+
+  <p>India&rsquo;s outbound travel is growing fast, especially from tier 2 and tier 3 cities. These are users ixigo already serves for trains, buses, and domestic flights. ixigo&rsquo;s international experience today is the domestic product with different routes. Users research on ixigo and book on MakeMyTrip or with an offline agent.</p>
+
+  <p>The core problem is confidence, not price. An offline agent tells you what documents you need, which flight is actually the best deal, and what to do after booking. No OTA does this digitally.</p>
+
+  <div class="insight-box">
+    <div class="insight-label">Key Structural Finding</div>
+    <p>The offline agent is the real competitor. They sell <strong>confidence</strong>, not inventory.</p>
+  </div>
+
+  <div class="subsection">
+    <div class="subsection-title">What breaks for this user</div>
+    <table class="data-table">
+      <thead>
+        <tr><th>Pain Point</th><th>What Actually Happens</th><th>Current Workaround</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>&ldquo;I don&rsquo;t know what I need&rdquo;</strong></td>
+          <td>Visa type, required docs, processing time, transit restrictions. One wrong assumption means denied boarding.</td>
+          <td>Calls a travel agent or asks a WhatsApp group</td>
+        </tr>
+        <tr>
+          <td><strong>&ldquo;Which flight is actually cheapest?&rdquo;</strong></td>
+          <td>Low sticker fare hides baggage cost, no meal, a 9-hour layover with no transit lounge. True cost is invisible.</td>
+          <td>Opens 4 tabs and manually adds up baggage fees</td>
+        </tr>
+        <tr>
+          <td><strong>&ldquo;I&rsquo;m scared of getting stuck&rdquo;</strong></td>
+          <td>Cancellation anxiety is far higher for international. Visa rejection after booking.</td>
+          <td>Delays booking, or uses an agent who handles everything</td>
+        </tr>
+        <tr>
+          <td><strong>&ldquo;Post-booking is dead&rdquo;</strong></td>
+          <td>After payment the OTA disappears. Insurance, forex, SIM checklist live nowhere.</td>
+          <td>Google, WhatsApp groups, YouTube</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- 01 WHO I WOULD BUILD FOR -->
+<div class="section">
+  <div class="section-header">
+    <div class="section-num">01</div>
+    <div class="section-title">Who I would build for, and why now</div>
+  </div>
+
+  <p><strong>Persona: &ldquo;Pehli Udaan&rdquo; users.</strong> ixigo users who graduated from train and bus to domestic flights and are now looking at their first international trip (Dubai, Thailand, Bali, Sri Lanka). High intent, zero confidence. Price is the first filter. Already on ixigo, so zero CAC.</p>
+
+  <div class="metric-grid" style="grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));">
+    <div class="metric-card" style="--card-accent:var(--accent)">
+      <div class="metric-lbl">Why now &middot; 01</div>
+      <p style="margin: 12px 0 0; font-size: 13px; color: var(--ink-soft);">AI can now parse visa rules, airline baggage policies, and transit requirements from unstructured documents at scale. Two years ago this needed an ops team per destination.</p>
+    </div>
+    <div class="metric-card" style="--card-accent:var(--orange)">
+      <div class="metric-lbl">Why now &middot; 02</div>
+      <p style="margin: 12px 0 0; font-size: 13px; color: var(--ink-soft);">India outbound travel is projected at 25M to 30M+ trips by 2028, with the fastest growth from tier 2/3 cities.</p>
+    </div>
+    <div class="metric-card" style="--card-accent:var(--blue)">
+      <div class="metric-lbl">Why now &middot; 03</div>
+      <p style="margin: 12px 0 0; font-size: 13px; color: var(--ink-soft);">No OTA has built this. Offline agents still handle an estimated 40 to 50 percent of international bookings from India.</p>
+    </div>
+  </div>
+</div>
+
+<!-- 02 WHAT I CHOSE NOT TO BUILD -->
+<div class="section">
+  <div class="section-header">
+    <div class="section-num">02</div>
+    <div class="section-title">What I chose not to build</div>
+  </div>
+
+  <p>Scope is a decision, not a leftover. Three things I deliberately left out of Phase 1:</p>
+
+  <div class="rec-card">
+    <div class="rec-num">01</div>
+    <div>
+      <div class="rec-title">Repeat travellers</div>
+      <div class="rec-desc">Their pain is coordination, not confidence. Phase 2.</div>
+    </div>
+  </div>
+  <div class="rec-card">
+    <div class="rec-num">02</div>
+    <div>
+      <div class="rec-title">Group booking</div>
+      <div class="rec-desc">Needs payment infra changes, multi-user auth, coordination UX. A quarter-long project on its own. Phase 3.</div>
+    </div>
+  </div>
+  <div class="rec-card">
+    <div class="rec-num">03</div>
+    <div>
+      <div class="rec-title">Hotel intelligence</div>
+      <div class="rec-desc">Flights are where the confidence gap is widest and the revenue opportunity is largest. Hotels follow.</div>
+    </div>
+  </div>
+</div>
+
+<!-- 03 AI-NATIVE, NOT AI-ADDED -->
+<div class="section">
+  <div class="section-header">
+    <div class="section-num">03</div>
+    <div class="section-title">AI-native, not AI-added</div>
+  </div>
+
+  <div class="subsection">
+  <div class="table-scroll">
+    <table class="data-table">
+      <thead>
+        <tr><th>AI-Added (what competitors will build)</th><th>AI-Native (what I would build)</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Chatbot that answers &ldquo;what visa do I need&rdquo;</td>
+          <td>Visa requirements auto-surfaced in search results based on passport nationality. No need to ask.</td>
+        </tr>
+        <tr>
+          <td>&ldquo;Ask AI&rdquo; button on flight results</td>
+          <td>Every flight re-ranked by true cost, layover quality, and route reliability. The AI runs in the background.</td>
+        </tr>
+        <tr>
+          <td>AI-generated itinerary suggestions</td>
+          <td>Trip workspace that tracks readiness and nudges based on departure date.</td>
+        </tr>
+        <tr>
+          <td>Chatbot for post-booking support</td>
+          <td>Disruption alerts that surface rebooking options before the user opens the app.</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  </div>
+
+  <div class="design-callout">
+    <strong>The user never talks to an AI.</strong> The output is structured UI, not a chat conversation.
+  </div>
+</div>
+
+<!-- 04 THE BOOKING FUNNEL CHANGE -->
+<div class="section">
+  <div class="section-header">
+    <div class="section-num">04</div>
+    <div class="section-title">The booking funnel change</div>
+  </div>
+
+  <p>Delhi to Bangkok. Two flights that look different on every OTA today, and identical once true cost is visible.</p>
+
+  <div class="metric-grid" style="grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));">
+    <div class="metric-card" style="--card-accent:var(--orange)">
+      <div class="metric-lbl">Flight A &middot; Looks cheaper today</div>
+      <div class="funnel-wrap" style="margin-top: 16px;">
+        <div class="funnel-label"><span class="stage">Base fare</span><span class="pct">Rs 18,000</span></div>
+        <div class="funnel-track"><div class="funnel-fill" style="width:74%;background:var(--orange)">Base</div></div>
+      </div>
+      <div class="funnel-wrap">
+        <div class="funnel-label"><span class="stage">Taxes</span><span class="pct">Rs 3,200</span></div>
+        <div class="funnel-track"><div class="funnel-fill" style="width:13%;background:var(--ink-mute)">Tax</div></div>
+      </div>
+      <div class="funnel-wrap">
+        <div class="funnel-label"><span class="stage">20kg checked bag (not included)</span><span class="pct">Rs 2,500</span></div>
+        <div class="funnel-track"><div class="funnel-fill" style="width:10%;background:var(--accent)">Bag</div></div>
+      </div>
+      <div class="funnel-wrap">
+        <div class="funnel-label"><span class="stage">Meal (not included)</span><span class="pct">Rs 500</span></div>
+        <div class="funnel-track"><div class="funnel-fill" style="width:2%;background:var(--purple)">Meal</div></div>
+      </div>
+      <div class="funnel-wrap">
+        <div class="funnel-label"><span class="stage">Transit visa via KL</span><span class="pct">Rs 0</span></div>
+        <div class="funnel-track"><div class="funnel-fill" style="width:1%;background:var(--rule)">Visa</div></div>
+      </div>
+      <div class="metric-val" style="margin-top: 16px; font-size: 28px;">Rs 24,200</div>
+      <div class="metric-lbl">True cost</div>
+    </div>
+
+    <div class="metric-card" style="--card-accent:var(--green)">
+      <div class="metric-lbl">Flight B &middot; Looks costlier today</div>
+      <div class="funnel-wrap" style="margin-top: 16px;">
+        <div class="funnel-label"><span class="stage">Base fare</span><span class="pct">Rs 21,000</span></div>
+        <div class="funnel-track"><div class="funnel-fill" style="width:87%;background:var(--green)">Base</div></div>
+      </div>
+      <div class="funnel-wrap">
+        <div class="funnel-label"><span class="stage">Taxes</span><span class="pct">Rs 3,200</span></div>
+        <div class="funnel-track"><div class="funnel-fill" style="width:13%;background:var(--ink-mute)">Tax</div></div>
+      </div>
+      <div class="funnel-wrap">
+        <div class="funnel-label"><span class="stage">Checked bag</span><span class="pct">Included</span></div>
+        <div class="funnel-track"><div class="funnel-fill" style="width:100%;background:var(--blue)">Included</div></div>
+      </div>
+      <div class="funnel-wrap">
+        <div class="funnel-label"><span class="stage">Meal</span><span class="pct">Included</span></div>
+        <div class="funnel-track"><div class="funnel-fill" style="width:100%;background:var(--blue)">Included</div></div>
+      </div>
+      <div class="funnel-wrap">
+        <div class="funnel-label"><span class="stage">Direct, no transit visa</span><span class="pct">Rs 0</span></div>
+        <div class="funnel-track"><div class="funnel-fill" style="width:100%;background:var(--green)">Direct</div></div>
+      </div>
+      <div class="metric-val" style="margin-top: 16px; font-size: 28px;">Rs 24,200</div>
+      <div class="metric-lbl">True cost</div>
+    </div>
+  </div>
+
+  <div class="insight-box">
+    <div class="insight-label">The deception this fixes</div>
+    <p>Identical true cost. On every OTA today, Flight A looks <strong>Rs 3,000 cheaper</strong>. That is the deception this fixes.</p>
+  </div>
+
+  <div class="subsection">
+    <div class="subsection-title">How search results change</div>
+    <table class="data-table">
+      <thead>
+        <tr><th>What the user sees</th><th>Why it builds confidence</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Total cost including baggage, meals, and transit visa fees</strong></td>
+          <td>A Rs 22K flight that costs Rs 28K with baggage is worse than a Rs 25K all-inclusive option</td>
+        </tr>
+        <tr>
+          <td><strong>Layover quality rating per airport</strong></td>
+          <td>A 12-hour Sharjah layover is materially different from a 4-hour Changi layover. First-time travellers cannot tell.</td>
+        </tr>
+        <tr>
+          <td><strong>Transit visa warning flag checked against passport nationality</strong></td>
+          <td>Not a ranking signal, a safety check. A missed transit visa means denied boarding.</td>
+        </tr>
+        <tr>
+          <td><strong>Airline reliability on that specific route</strong></td>
+          <td>First-time travellers weigh on-time performance more heavily than frequent flyers</td>
+        </tr>
+        <tr>
+          <td><strong>Baggage inclusion clarity</strong></td>
+          <td>Prevents post-booking surprise charges for price-sensitive users</td>
+        </tr>
+      </tbody>
+    </table>
+    <p style="font-size: 13px; color: var(--ink-mute);">Default sort becomes total cost instead of base fare, with a toggle back to base fare.</p>
+  </div>
+</div>
+
+<!-- 05 THE PROTOTYPE -->
+<div class="section">
+  <div class="section-header">
+    <div class="section-num">05</div>
+    <div class="section-title">The prototype</div>
+  </div>
+
+  <p>A working prototype covering guided destination discovery, true-cost flight ranking, and inline visa intelligence. Built to make the funnel change tangible, not just described.</p>
+
+  <a href="https://ixigo-ai-booking.vercel.app/" target="_blank" rel="noopener noreferrer" class="rec-card" style="align-items: center;">
+    <div class="rec-num">&#x2197;</div>
+    <div>
+      <div class="rec-title">Try the prototype</div>
+      <div class="rec-desc">ixigo-ai-booking.vercel.app &middot; Opens in a new tab</div>
+    </div>
+  </a>
+
+  <div class="metric-grid" style="grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); margin-top: 28px;">
+    <div class="metric-card" style="padding: 0; overflow: hidden;">
+      <img
+        src="prototype-discovery.png"
+        alt="Guided destination discovery screen for Indian passport holders"
+        width="2400"
+        height="1327"
+        loading="lazy"
+        decoding="async">
+    </div>
+    <div class="metric-card" style="padding: 0; overflow: hidden;">
+      <img
+        src="prototype-truecost.png"
+        alt="Flight results ranked by true cost including baggage and transit visa fees"
+        width="2400"
+        height="1327"
+        loading="lazy"
+        decoding="async">
+    </div>
+    <div class="metric-card" style="padding: 0; overflow: hidden;">
+      <img
+        src="prototype-visa.png"
+        alt="Visa requirements and transit visa warning surfaced inline in search results"
+        width="2400"
+        height="1327"
+        loading="lazy"
+        decoding="async">
+    </div>
+  </div>
+</div>
+
+<!-- 06 HOW I WOULD MEASURE IT -->
+<div class="section">
+  <div class="section-header">
+    <div class="section-num">06</div>
+    <div class="section-title">How I would measure it</div>
+  </div>
+
+  <div class="insight-box">
+    <div class="insight-label">North Star</div>
+    <p><strong>First-time international booking conversion rate.</strong> The percentage of users who search for an international flight on ixigo for the first time and complete a booking.</p>
+  </div>
+
+  <div class="subsection">
+    <div class="subsection-title">Supporting metrics</div>
+    <table class="data-table">
+      <thead>
+        <tr><th>Metric</th><th>Target (6 months)</th><th>What it tells us</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>International search-to-book rate</strong></td>
+          <td class="mono">15 to 20% improvement vs baseline</td>
+          <td>Whether the funnel changes work overall</td>
+        </tr>
+        <tr>
+          <td><strong>Users who see total cost and do not toggle back</strong></td>
+          <td class="mono">80% or higher</td>
+          <td>Whether transparency builds trust or scares users</td>
+        </tr>
+        <tr>
+          <td><strong>Assured International attach rate</strong></td>
+          <td class="mono">10 to 15% of eligible bookings</td>
+          <td>Whether a visa rejection guarantee reduces booking anxiety enough to pay for</td>
+        </tr>
+        <tr>
+          <td><strong>Ancillary attach rate</strong></td>
+          <td class="mono">20 to 25% of international bookings</td>
+          <td>Revenue multiplier beyond the base transaction</td>
+        </tr>
+      </tbody>
+    </table>
+    <p style="font-style: italic; font-size: 13px;">These are calibrated estimates, not observed results. Without ixigo&rsquo;s baseline data I would treat every number here as a hypothesis to be validated in Phase 1.</p>
+  </div>
+
+  <div class="callout">
+    <strong>Guardrails</strong><br><br>
+    <strong>Visa and transit info accuracy:</strong> 99 percent or higher for the top 15 destinations. Below 95 percent means pausing AI-surfaced answers and reverting to static content.<br><br>
+    <strong>Search latency with enriched data:</strong> under 3 seconds, with pre-computed fallbacks for the top 50 nationality-destination pairs.<br><br>
+    <strong>Domestic booking cannibalisation:</strong> monitored weekly.
+  </div>
+</div>
+
+<!-- 07 RISKS AND WHAT I WOULD SHIP FIRST -->
+<div class="section">
+  <div class="section-header">
+    <div class="section-num">07</div>
+    <div class="section-title">Risks and what I would ship first</div>
+  </div>
+
+  <div class="subsection">
+  <div class="table-scroll">
+    <table class="data-table">
+      <thead>
+        <tr><th>Risk</th><th>Severity</th><th>Mitigation</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Visa information is wrong</strong></td>
+          <td class="mono text-accent">Critical</td>
+          <td>Human verification for the top 15 destinations before launch. Every answer shows a &ldquo;last verified&rdquo; date. Start with visa-free and visa-on-arrival destinations where error tolerance is higher.</td>
+        </tr>
+        <tr>
+          <td><strong>Showing total cost scares users</strong></td>
+          <td class="mono">Medium</td>
+          <td>A/B test on 10 percent of international traffic. If conversion drops, test a &ldquo;you save Rs X versus hidden fees&rdquo; framing.</td>
+        </tr>
+        <tr>
+          <td><strong>Assured International claim rate too high</strong></td>
+          <td class="mono">Medium</td>
+          <td>Launch only for low-rejection destinations. Tiered pricing. Cap exposure per route.</td>
+        </tr>
+        <tr>
+          <td><strong>Competitors copy quickly</strong></td>
+          <td class="mono">Low</td>
+          <td>A verified knowledge base for 15+ destinations takes months to build. The durable advantage is execution quality.</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  </div>
+
+  <div class="insight-box" style="margin-top: 28px;">
+    <div class="insight-label">If I could ship one thing</div>
+    <p>The <strong>transit visa warning flag</strong>. It is a safety feature, not a convenience feature. The nationality by airport matrix is finite and manually compilable, so it ships in two weeks. A missed transit visa means denied boarding, which is the worst outcome in the entire journey. It is also the kind of thing a user tells five friends about.</p>
+  </div>
+</div>
+
+</main>
+
+<div class="case-footer">
+  <span>Ishaan Tandon &middot; Case Study 2026</span>
+  <a href="/portfolio/">&larr; Back to portfolio</a>
+</div>
+
+</body>
+</html>

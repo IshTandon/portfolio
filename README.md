@@ -10,8 +10,8 @@ A minimal, editorial portfolio site built to showcase AI/GenAI product managemen
 - **Light / Dark mode** with system preference detection and manual toggle (persisted via `localStorage`)
 - **Responsive** — optimized layouts for desktop, tablet, and mobile with a hamburger menu on small screens
 - **Tabbed work experience** — company logos, timelines, and quantified bullet points
-- **AI Builds section** — HealthIsh and MindTheGap with structured Problem → Approach → Outcome format
-- **Case studies** — featured case study with horizontal scroll grid and detailed KPI breakdowns
+- **AI Builds section** — shipped products (AgentDict, HealthIsh, MindTheGap, FIFA, ixigo) with Problem → Approach → Outcome format
+- **Case studies** — featured cases (Optimus, Namma Yatri, ixigo) plus a horizontal mini-case scroll
 - **"What I'm looking for" section** — cards highlighting role preferences
 - **"How I think" philosophy cards** — product management principles
 - **"How I work" process strip** — Discover → Define → Build → Measure
@@ -38,7 +38,10 @@ A minimal, editorial portfolio site built to showcase AI/GenAI product managemen
 ## Project Structure
 
 ```
-├── index.html                  # Entire site (HTML + CSS + JS)
+├── index.html                  # Main portfolio page (HTML + CSS + JS)
+├── ixigo/index.html            # ixigo international travel case study
+├── namma-yatri/index.html      # Namma Yatri datathon case study
+├── optimus/index.html          # Optimus Family Hub case study
 ├── portrait.webp               # Hero portrait photo
 ├── og-card.png                 # Open Graph social sharing image
 ├── Ishaan_Tandon_Resume.pdf    # Downloadable resume
